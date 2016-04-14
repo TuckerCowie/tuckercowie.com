@@ -1,0 +1,19 @@
+{
+  "name": "tuckercowie.com",
+  "version": "1.0.0",
+  "description": "Tucker Cowie's portfolio in Javascript",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://TuckerCowie@github.com/TuckerCowie/tuckercowie.com.git"
+  },
+  "author": "Tucker Cowie <tuckercowie@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TuckerCowie/tuckercowie.com/issues"
+  },
+  "homepage": "https://github.com/TuckerCowie/tuckercowie.com#readme"
+}
