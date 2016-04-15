@@ -4,8 +4,7 @@
   "description": "Tucker Cowie's portfolio in Javascript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "webpack"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -27,5 +26,8 @@
     "babel-register": "^6.7.2",
     "express": "^4.13.4",
     "jade": "^1.11.0"
+  },
+  "engine": {
+    "node": "^5.3.0"
   }
 }
