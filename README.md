@@ -26,8 +26,6 @@ As a designer turned developer, I enjoy declarative polymorphic code in framewor
   
 # Major Projects
 
-Many of the projects I work on are private and protected by NDAs at my current company. The following recent projects are public.
-
 ### Schlumberger QRG ###
 _[iOS App][3] & custom CMS - Global 500 Oil & Gas - `MongoDB`, `Express.js`, `AngularJS`, `Node.js`_
 
