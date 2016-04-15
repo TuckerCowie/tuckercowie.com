@@ -3,9 +3,9 @@ import express from 'express';
 const server = express();
 
 server.set('view engine', 'jade');
-server.set('views', './src/server/views');
+server.set('views', './views');
 
-server.use(express.static(`${process.cwd()}/build`));
+server.use(express.static(`${process.cwd()}/public`));
 
 server.get('*', (req, res) => {
   res.render('index');

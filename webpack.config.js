@@ -2,7 +2,7 @@ module.exports = {
   cache: process.env.NODE_ENV === 'production',
   debug: process.env.NODE_ENV !== 'production',
   entry: {
-    app: ['./src/client/index.js'],
+    app: ['./public/index.js'],
   },
   module: {
     loaders: [
@@ -10,8 +10,8 @@ module.exports = {
     ],
   },
   output: {
-    path: './build',
+    path: './public',
     publicPath: '/',
-    filename: '[name].js',
+    filename: 'bundle.js',
   },
 };
