@@ -1,19 +1,8 @@
 {
-  "name": "tuckercowie.com",
+  "name": "release/0.0.0",
   "description": "Tucker Cowie's personal portfolio",
-  "scripts": {
-  },
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "NPM_MODULES_CACHE": "false",
   },
-  "formation": {
-  },
-  "addons": [
-
-  ],
-  "buildpacks": [
-    {
-      "url": "heroku/nodejs"
-    }
-  ]
 }
