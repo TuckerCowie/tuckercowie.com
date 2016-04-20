@@ -1,0 +1,19 @@
+{
+  "name": "tuckercowie.com",
+  "description": "Tucker Cowie's personal portfolio",
+  "scripts": {
+  },
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
