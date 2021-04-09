@@ -1,16 +1,24 @@
-import express from 'express';
+var express = require('express');
+var sassMiddleware = require('node-sass-middleware');
 
-const server = express();
+var server = express();
 
-server.set('view engine', 'jade');
+server.set('view engine', 'pug');
 server.set('views', './views');
 
-server.use(express.static(`${process.cwd()}/public`));
+server.use('/', sassMiddleware({
+  src: __dirname,
+  dest: __dirname + '/public',
+  indentedSyntax: true,
+  debug: process.env.node_env !== 'production',
+  outputStyle: 'compressed',
+}));
+server.use('/', express.static(process.cwd() + '/public'));
 
-server.get('*', (req, res) => {
-  res.render('index');
+server.get('*', function (req, res) {
+  return res.render('index');
 });
 
 server.listen(process.env.PORT || 9000, () => {
-  console.log(`Server listening on port ${process.env.PORT || '9000'}`);
+  console.log('Server listening on port ' + (process.env.PORT || '9000'));
 });
