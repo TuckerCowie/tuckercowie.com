@@ -6,7 +6,7 @@
   "author": "Tucker Cowie <tuckercowie@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "node-sass-middleware": "^0.11.0",
     "pug": "^3.0.2"
   }
