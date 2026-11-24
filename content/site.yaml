@@ -1,0 +1,28 @@
+# Site-wide copy and settings. Every line here is shown on the site.
+name: Tucker Cowie
+url: https://tuckercowie.com
+description: Tucker Cowie is a product and design leader. The work and how it was made, how to work with him, and the system he builds with.
+
+# The identity line: what he is, the current role, then independent work.
+identity:
+  - Product and design leader.
+  - Head of Product and Operations, NarrowStack.
+  - Independent work as Cowie Creative.
+
+epigraph: “Still water that runs deep. Unhurried, yet flowing freely.”
+lead: I do my best work as a specialist generalist. Senior judgment applied to complex, multi-disciplinary problems.
+sub: Fifteen years across design, product, and development, in one person.
+
+doors:
+  work: Case studies, workshops and talks.
+  profile: How I work best.
+  systems: How I build with AI agents.
+
+# The one action. No address is committed to this public repo until Tucker
+# chooses one. While it is null, preview builds show the link as a draft and
+# a production build fails.
+email: null
+email_label: Email Tucker
+
+# Keys shown with a DRAFT tag in preview builds: copy that waits on Tucker.
+drafts: [identity]

@@ -1,0 +1,41 @@
+# Profile data shown under the manual on /profile/.
+
+portrait:
+  src: portrait.jpg
+  alt: Tucker Cowie sitting on garden steps in a grey sweater and jeans, smiling at the camera.
+  caption: Tucker Cowie
+
+# The mission and the being statement, verbatim.
+statements:
+  - label: Being statement
+    text: Still water that runs deep. Unhurried, yet flowing freely.
+  - label: Mission
+    text: To explore deeply and share faithfully.
+    draft: true
+
+# One line per assessment, in Tucker's words. Full reports stay private.
+# A null line shows as "to come" in preview builds.
+assessments:
+  - { name: MBTI, line: null }
+  - { name: Enneagram, line: null }
+  - { name: StrengthsQuest, line: null }
+  - { name: Adobe Creative Types, line: null }
+assessments_note: One line each, in my words. The full reports stay private.
+
+# Compact career history, newest first. `from: null` means the start date is
+# not yet known.
+career:
+  - { role: Head of Product and Operations, organisation: NarrowStack, from: null, to: null, draft: true }
+  - { role: "Manager, Experience Design", organisation: Autodesk, from: Dec 2023, to: Apr 2026 }
+  - { role: "Manager, Product Management", organisation: Autodesk, from: Mar 2023, to: Apr 2024 }
+  - { role: VP of Product, organisation: UNIFI Labs, from: May 2021, to: Apr 2023, note: Acquired. }
+  - { role: Head of Product and Design, organisation: Keto A.I., from: Apr 2020, to: May 2021 }
+  - { role: Design Manager, organisation: Arundo Analytics, from: Dec 2019, to: Mar 2020 }
+  - { role: "Design Team Lead, Senior Product Designer and earlier roles", organisation: Arundo Analytics, from: Jul 2016, to: Feb 2019 }
+  - { role: Software Developer, organisation: MediaFire, from: Jan 2016, to: Jul 2016 }
+  - { role: Director of Design and Development, organisation: Abstract Media Co., from: Jan 2014, to: Dec 2015 }
+
+education:
+  - { title: B.S. Graphic and Web Design, organisation: John Brown University }
+  - { title: Product Management, organisation: Product Institute, when: May 2020 }
+  - { title: UX Management, organisation: Interaction Design Foundation, when: Nov 2019 }
