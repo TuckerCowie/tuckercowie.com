@@ -1,0 +1,47 @@
+/* Tokens from the deep-water reference study. Starting values for the build, not a constraint. */
+
+:root{
+  /* colour */
+  --ground:    oklch(0.17 0.03 250);
+  --ground-2:  oklch(0.22 0.035 250);
+  --ink:       oklch(0.94 0.01 220);
+  --ink-soft:  oklch(0.76 0.02 225);
+  --ink-faint: oklch(0.60 0.03 235);
+  --line:      oklch(0.36 0.03 245);
+  --light:     oklch(0.82 0.11 200);
+  --mat:       oklch(0.96 0.006 210);
+  --mat-ink:   oklch(0.28 0.028 245);
+  --mat-line:  oklch(0.85 0.01 215);
+  --st-shipped: oklch(0.80 0.14 150);
+  --st-running: oklch(0.80 0.10 250);
+  --st-growing: oklch(0.86 0.15 115);
+  --st-built:   oklch(0.78 0.10 300);
+  --st-parked:  oklch(0.82 0.13 80);
+  --st-killed:  oklch(0.72 0.16 25);
+
+  /* type families */
+  --font-serif: "Newsreader", serif;
+  --font-sans:  "IBM Plex Sans", sans-serif;
+  --font-mono:  "IBM Plex Mono", monospace;
+
+  /* type scale: base 17px, ratio 1.25 (major third) */
+  --step--1: 13.6px;
+  --step-0:  17px;
+  --step-1:  21.25px;
+  --step-2:  26.56px;
+  --step-3:  33.2px;
+  --step-4:  41.5px;
+  --step-5:  51.9px;
+  --fs-plate:   clamp(36px, 5.5vw, 80px);
+  --fs-title:   clamp(52px, 7.5vw, 112px);
+  --fs-display: clamp(52px, 9vw, 150px);
+
+  /* space: 4px base */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 144px;
+
+  --radius: 0;
+  --gutter: clamp(16px, 4vw, 48px);
+  --wrap: 1360px;
+  --measure: 64ch;
+}

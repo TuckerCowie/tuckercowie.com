@@ -29,8 +29,8 @@ deploy:
 links:
   product_home: docs/product/
   vault: null
-next_action: "Tucker locks one visual direction; then run the build goal against docs/product/intent.md"
-blocked_on: "Direction lock (Tucker); Round 2 project capture (Tucker)"
+next_action: "Run the build goal against docs/product/intent.md and docs/product/design/"
+blocked_on: null
 kill_thresholds: []
 runs:
   - skill: bip

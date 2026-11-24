@@ -106,6 +106,31 @@ and LinkedIn. `[assumption]`
   noun-phrase headings. Tucker approves copy before it is published.
   `[interview]` No em dashes. `[research]`
 
+### Must: moods
+
+- The site has five moods: **Still Water** (light, the default), **Deep
+  Water** (dark), **Swiss**, **Cyber** and **Vellum**. `[interview]` Vellum is
+  the designer's choice, as Tucker asked for a third of the designer's own
+  making. `[interview]`
+- Still Water and Deep Water act as the light and dark modes of the site.
+  `[interview]` With no parameter and no saved choice, a visitor sees Still
+  Water, or Deep Water if their system asks for dark. `[assumption]`
+- A minimal mood switcher changes the look in one click, on every page.
+  `[interview]` It is small enough to ignore. `[assumption]`
+- A URL parameter selects the mood, so a link can share a look.
+  `[interview]` Proposed form: `?mood=swiss`. Order of precedence: URL
+  parameter, then the visitor's saved choice, then system light or dark,
+  then Still Water. `[assumption]`
+- Content is written once. A mood may change style and layout fundamentally.
+  It never changes content. `[interview]` Adding or removing a mood touches
+  no content file. `[assumption]`
+- The switch is seamless: no reload, no flash of the wrong mood on first
+  paint. `[interview]`
+- Every mood meets the accessibility bar on its own, and with scripting off
+  the site is Still Water. `[assumption]`
+- Each mood is one stylesheet over a small, fixed set of components, and the
+  build checks a screenshot of the key pages in every mood. `[assumption]`
+
 ### Should
 
 - A print resume generated from the same content. `[assumption]`
@@ -149,6 +174,8 @@ and LinkedIn. `[assumption]`
 - No automatic sync from his notes or from project ledgers in the first
   version. `[assumption]`
 - The build is not gated on the post-2021 case studies. `[interview]`
+- The Workbench direction, as rendered in the first studies, is dropped.
+  `[interview]`
 
 ## Magic moment (smallest testable version)
 
@@ -182,21 +209,24 @@ minutes; adding an entry takes under ten minutes. `[assumption]`
 | 3 | The site stays maintained `[assumption]` | High | Time one new entry, and have an agent add one from a sentence | Adding an entry needs layout or code work |
 | 4 | The manual and the systems map help the first reader instead of distracting `[assumption]` | Medium | First-click test on the home screen with three people | Readers looking for work examples cannot find them in one click |
 | 5 | Employers and clients allow what is shown `[assumption]` | High | Confirm per entry before its visibility changes to public | An entry cannot be cleared. It stays draft |
+| 6 | One body of markup can carry five fundamentally different layouts `[assumption]` | High | Build the home screen and one case study in all five moods before anything else | A mood needs its own markup. That mood becomes a styling-only variant or is cut |
+| 7 | The mood switcher helps first readers and does not distract them `[assumption]` | Medium | Watch three first readers on the home screen | They play with moods and do not open the work. The switcher moves to the footer |
 
 ## Open questions
 
 - NarrowStack start date, for the career history.
-- Which three post-2021 projects to capture first.
+- The three post-2021 projects are chosen and pinned until after the build:
+  UNIFI Labs, Autodesk, NarrowStack.
 - The board dates one Arundo study to 2019, in a stretch the resume frame
   leaves open.
 - Whether a DISC result exists. None was found.
 - One line per assessment, in Tucker's words.
 - The address to publish for the email link, and the portrait to use.
 - Domain registrar and current host.
-- The visual direction: three graded directions are being rendered for
-  Tucker to lock one.
-- The quality bar: whether the build is judged against a named reference
-  site, and which.
+- Whether five moods is the right number once they are live. Each is cheap
+  to remove.
+- The quality bar is each mood's own reference study, in `design/`. Tucker
+  has not chosen an outside reference site.
 
 ## Source links
 
@@ -204,6 +234,9 @@ minutes; adding an entry takes under ten minutes. `[assumption]`
 - `research/interview.md`: interview log and verdict, 2026-11-24
 - `research/portfolio-audit.md`: the board, the past sites, the grammar
 - `research/systems-map.md`: source material for the Systems page
+- `design/README.md`: the five moods, their reference studies and the
+  switching contract
+- `source/`: the board frames, the case-study artifacts and the manual
 - The public portfolio board: https://miro.com/app/board/o9J_lLhlDmc=/
 - The legacy 2021 site: branch `develop` of this repo
 

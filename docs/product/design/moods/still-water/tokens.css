@@ -1,0 +1,59 @@
+/* Tokens from the still-water reference study. Starting values for the build, not a constraint. */
+
+:root{
+  /* colour: one accent (teal), cool paper and slate ink */
+  --paper:     oklch(0.972 0.006 210);
+  --paper-2:   oklch(0.945 0.009 210);
+  --ink:       oklch(0.28 0.028 245);
+  --ink-soft:  oklch(0.44 0.026 240);
+  --ink-faint: oklch(0.62 0.02 235);
+  --teal:      oklch(0.56 0.072 205);
+  --teal-text: oklch(0.50 0.075 205);
+  --line:      oklch(0.82 0.014 220);
+  /* status colours, Works ledger only, always paired with a label */
+  --status-shipped: oklch(0.50 0.09 150);
+  --status-running: oklch(0.50 0.08 250);
+  --status-growing: oklch(0.50 0.09 110);
+  --status-built:   oklch(0.50 0.05 290);
+  --status-parked:  oklch(0.53 0.10 70);
+  --status-killed:  oklch(0.50 0.13 25);
+
+  /* font families */
+  --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-sans:  "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:  "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* type scale: base 17px, ratio 1.25 (major third) */
+  --step--1: 0.85rem;    /* 13.6px */
+  --step-0:  1.0625rem;  /* 17px   */
+  --step-1:  1.328rem;   /* 21.3px */
+  --step-2:  1.66rem;    /* 26.6px */
+  --step-3:  2.075rem;   /* 33.2px */
+  --step-4:  2.594rem;   /* 41.5px */
+  --step-5:  3.242rem;   /* 51.9px */
+  --step-6:  4.053rem;   /* 64.8px */
+  --leading-body: 1.6;
+  --leading-tight: 1.15;
+  --tracking-mono: 0.12em;
+
+  /* space scale: 8px step */
+  --sp-1: 0.5rem;   /*  8 */
+  --sp-2: 1rem;     /* 16 */
+  --sp-3: 1.5rem;   /* 24 */
+  --sp-4: 2rem;     /* 32 */
+  --sp-5: 3rem;     /* 48 */
+  --sp-6: 4.5rem;   /* 72 */
+  --sp-7: 6rem;     /* 96 */
+  --sp-8: 9rem;     /* 144 */
+
+  /* radius */
+  --radius: 2px;
+
+  /* layout */
+  --measure: 36rem;  /* about 66 characters of IBM Plex Sans at 17px */
+  --rail: 9rem;
+  --page: 90rem;
+  --gutter: clamp(1rem, 4vw, 3rem);
+}
+
+:root{--rail:7.5rem}

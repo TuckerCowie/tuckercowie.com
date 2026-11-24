@@ -131,6 +131,31 @@ case study a first-class format and capture post-2021 projects by interview,
 in parallel with the build, without gating the build on them.
 Tucker's decision (2026-11-24): proceed, with projects captured in writing.
 
+## Round 1 follow-up: direction review and a feature request (2026-11-24)
+
+Three direction studies were shown: Still Water (mild), Workbench (medium)
+and Deep Water (hot). Tucker's reply, verbatim:
+
+> I'd like to add a feature request. These initial studies are great, but you need to drop the workbench aesthetic as is. Craft 3 more studies in its place including futuristic virtual cyber punk ui, an extremely rigorous and precise minimalist geo Swiss design aesthetic, and a third style of your own choice and making. Still water and deep water should act like light and dark modes of the site but a minimal mood switcher should allow users to switch the aesthetic in one click. Architect the site in a way where the styles and layout can fundamentally change but the content stays the same. I want url parameters to control it too in case I want to share a certain look with others by default. Still water can be the default starting point, but it sold seamlessly shift if Swiss or cyber are selected etc. also all three of your written case study project capture suggestions are good; pin those for later. Let's move on with the design and build first, then we'll add additional content, coming back to those
+
+Decisions this records:
+
+- Workbench is dropped as rendered.
+- The site has several moods. Still Water and Deep Water are its light and
+  dark modes. Swiss and Cyber are added, plus a third of the designer's
+  choosing.
+- A minimal mood switcher changes the look in one click.
+- A URL parameter selects the mood, so a link can share a look.
+- Still Water is the default.
+- Styles and layout may change fundamentally between moods. Content does not.
+- Design and build come first. Content capture follows.
+
+_Interpretation: the third mood proposed is Vellum, the site as a drawing set
+on drafting film. One caution was given once: five moods means every
+component is designed and checked five times, so the build keeps a small
+fixed set of components, one stylesheet per mood and a screenshot check per
+mood._
+
 ## The privacy line, as Tucker gave it
 
 From the withheld part of his opening message and from Round 1. Never on the
@@ -139,11 +164,17 @@ or family; private apps and home systems; the contents of his notes or ideas
 backlog; employer-confidential work; client names without permission; review
 feedback; fees.
 
-## Round 2 (open)
+## Round 2 (pinned until after the build)
 
 Project capture. One project at a time, five questions each: the situation,
 what you did, what changed, what you would do differently, and what can be
-shown or named. Tucker picks the first three.
+shown or named.
+
+Tucker accepted all three suggested projects and pinned them for later:
+
+1. UNIFI Labs: customer insights and continuous discovery.
+2. Autodesk: AEC journey mapping and workshops.
+3. NarrowStack: the AI Agent and Data Advisory Playbook.
 
 Also open from the blindspot list: what success honestly looks like in twelve
 months, the address to publish for the email link, and which portrait to use.
