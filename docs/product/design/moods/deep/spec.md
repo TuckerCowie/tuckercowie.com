@@ -75,3 +75,23 @@ Variance 7, Motion 6, Density 3.
 **Known risk to manage.** Dark pages tire the eye over a long case study and
 can feel theatrical. Counter with large type, short measures, bright mats
 that give the eye a rest, and motion so slow it is nearly still.
+
+## From Tucker's boards
+
+Read from his own saved inspiration. See `../../references/README.md`.
+
+- **Borrow:** light as the content, with one luminous ring or orb as the
+  hero; dark as a material, tonal with one luminous or metallic detail;
+  monumental numerals carrying scale as readily as serif titles.
+- **Hold against his saves:** most of his dark pins are neutral graphite or
+  black, and their light is often gold or white. The blue-black and the
+  serif come from the water idea and his manual. Never neon.
+- **As a pair:** this is the dark mode of Still Water. Share its structure
+  and scale.
+
+## The bar
+
+- **Floor:** this folder's study (`home.jpg`, `case-study.jpg`,
+  `specimen.jpg`). Compare the built page with it blind, like for like.
+- **Ceiling:** these pins in `../../references/references.yaml`:
+  `K01-26`, `K01-29`, `K06-05`, `K06-08`, `K09-01`, `D17-22`, `D19-22`, `D13-14`, `D13-05`, `A03-04`, `A03-11`, `I06-02`, `D14-04`. The critic names where the built page falls short of them.

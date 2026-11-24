@@ -84,3 +84,25 @@ Variance 8, Motion 7, Density 7.
 **Known risk to manage.** Costume over content, and eye fatigue. The counter:
 keep reading columns calm and well lit, put the spectacle in the frame, and
 meet WCAG AA contrast everywhere.
+
+## From Tucker's boards
+
+Read from his own saved inspiration. See `../../references/README.md`. This
+mood has the strongest evidence of the three.
+
+- **Borrow:** structure over glow. Panels, readouts, dials and status
+  lights. Concentric rings and corner-cut frames. Dark maps and node graphs
+  as native imagery. Real instruments (knobs, keypads, lit hardware) as much
+  as film interfaces.
+- **Change from the study:** make amber the second signal in place of
+  magenta. His dark interfaces use one dominant cyan with orange or amber
+  second, and no magenta.
+- **Keep glow sparing:** on a dial, a gauge, an arc. Never bloom across the
+  screen.
+
+## The bar
+
+- **Floor:** this folder's study (`home.jpg`, `case-study.jpg`,
+  `specimen.jpg`). Compare the built page with it blind, like for like.
+- **Ceiling:** these pins in `../../references/references.yaml`:
+  `B03-20`, `B03-18`, `B03-17`, `B03-11`, `D09-28`, `D01-04`, `D01-09`, `D09-15`, `D09-59`, `D09-06`, `D08-02`, `D08-04`, `T01-18`, `R03-07`, `K02-03`, `M02-02`, `I06-29`, `D10-02`, `D02-02`. The critic names where the built page falls short of them.

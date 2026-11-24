@@ -36,12 +36,30 @@ Not part of the first build. The build must make each one cheap to add.
 
 - [`later/swiss/`](later/swiss/): a full reference pack. Stands for the
   designer.
-- [`later/vellum/`](later/vellum/): a spec. Stands for the systems thinker.
+- [`later/vellum/`](later/vellum/): a full reference pack. Stands for the
+  systems thinker.
 - [`mood-ideas.md`](mood-ideas.md): more suggested moods, a unifying frame
   and the questions still open. Suggestions and an invitation to brainstorm,
   not requirements.
 
 A direction called Workbench was rendered and dropped. It is not here.
+
+## The bar
+
+Each launch mood is judged against two things. Both are listed at the end
+of the mood's `spec.md`.
+
+- **The floor is its reference study.** It is the same content, so the
+  comparison is like for like: the built page beside the study, labels
+  stripped, a fresh critic says which is better.
+- **The ceiling is Tucker's own saved inspiration.** A short set of pins per
+  mood, linked in [`references/references.yaml`](references/references.yaml)
+  and read in [`references/README.md`](references/README.md). A pin is
+  someone else's poster or dashboard, so it is not a like-for-like test. The
+  critic uses the pins to name where the built page falls short in craft.
+
+The pins need network access to Pinterest. Where they cannot be fetched,
+the `teaches` line for each pin stands in.
 
 ## The mood contract
 
@@ -94,7 +112,8 @@ colours and a restrained glow.
 - **Deep Water.** The strongest first screen. A long case study on a dark
   ground is tiring, so keep the pale mats and a generous leading.
 - **Cyber.** The frame carries the spectacle and the reading stays calm,
-  which is the right split. Keep readouts to real data only.
+  which is the right split. Keep readouts to real data only. Swap the second
+  signal from magenta to amber, to match what Tucker saves.
 - **All studies.** None renders a written case study with no images, which
   the brief requires. Lines tagged draft in a study are placeholders, not
   content.

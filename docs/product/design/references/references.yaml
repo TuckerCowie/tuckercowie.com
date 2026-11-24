@@ -1,0 +1,467 @@
+# reference-set/v1: pins from Tucker's public Pinterest boards that set the taste bar.
+# Sampled 2026-11-24: 1,173 of about 3,800 pins, read as contact sheets.
+# `teaches` is a reader's inference from the image. `why_saved` is Tucker's to fill in.
+# Images are other people's work and are not stored here. Follow the link.
+references:
+  - id: K01-02
+    url: https://www.pinterest.com/pin/189432728068418901/
+    board: "Keto AI"
+    section: "[UX] Mobile"
+    for: [still]
+    teaches: "Pale cool-grey mobile UI: white cards, hairline rules, one accent."
+    why_saved: null
+  - id: K01-17
+    url: https://www.pinterest.com/pin/189432728065003920/
+    board: "Keto AI"
+    section: "[UX] Mobile"
+    for: [still]
+    teaches: "One oversized numeral as the hero of a pale screen."
+    why_saved: null
+  - id: K02-10
+    url: https://www.pinterest.com/pin/189432728063923655/
+    board: "Keto AI"
+    section: "[UX] Desktop"
+    for: [still]
+    teaches: "A dense order table made calm: low contrast, thin rules, one green action."
+    why_saved: null
+  - id: K04-04
+    url: https://www.pinterest.com/pin/189432728067879737/
+    board: "Keto AI"
+    section: "Email"
+    for: [still]
+    teaches: "One big number, one line, one button on grey."
+    why_saved: null
+  - id: K10-11
+    url: https://www.pinterest.com/pin/189432728064859761/
+    board: "Keto AI"
+    section: "Shapes & Patterns"
+    for: [still]
+    teaches: "Wave and ripple patterns in a tight teal family: water as pattern."
+    why_saved: null
+  - id: D20-11
+    url: https://www.pinterest.com/pin/189432728062112084/
+    board: "Design"
+    section: "Color"
+    for: [still]
+    teaches: "A palette lifted from a misty sea: pale cream down to deep teal. The Still Water to Deep Water ramp in one image."
+    why_saved: null
+  - id: D02-10
+    url: https://www.pinterest.com/pin/189432728075394301/
+    board: "Design"
+    section: "Smart Home"
+    for: [still, later:ledger]
+    teaches: "A giant thin mono clock on white with tiny data rows beneath."
+    why_saved: null
+  - id: D17-07
+    url: https://www.pinterest.com/pin/189432728066322072/
+    board: "Design"
+    section: "Print"
+    for: [still, later:ledger]
+    teaches: "A serif-set invoice: small type, generous paper, quiet rules."
+    why_saved: null
+  - id: D17-06
+    url: https://www.pinterest.com/pin/189432728066322073/
+    board: "Design"
+    section: "Print"
+    for: [still, later:swiss]
+    teaches: "Swiss letterhead: sparse black grotesque, rotated tiny caption, nothing else; strict-grid reference."
+    why_saved: null
+  - id: D07-07
+    url: https://www.pinterest.com/pin/189432728060746025/
+    board: "Design"
+    section: "Graphics"
+    for: [still]
+    teaches: "Labelled dot-cluster specimens in a 3x5 grid; data-art as a plate, directly Field Guide or Vellum."
+    why_saved: null
+  - id: D13-13
+    url: https://www.pinterest.com/pin/189432728058516071/
+    board: "Design"
+    section: "Data visualization"
+    for: [still]
+    teaches: "Serif-headed annotated line chart; newspaper register."
+    why_saved: null
+  - id: D21-01
+    url: https://www.pinterest.com/pin/189432728075394294/
+    board: "Design"
+    section: "Web"
+    for: [still]
+    teaches: "A pale spec-sheet portfolio with a pixel wordmark, boxed cards and one orange accent."
+    why_saved: null
+  - id: A04-08
+    url: https://www.pinterest.com/pin/189432728065079166/
+    board: "Aquascaping"
+    section: "Iwagumi"
+    for: [still]
+    teaches: "3D stone with pill labels naming each stone: annotation as layout."
+    why_saved: null
+  - id: K01-26
+    url: https://www.pinterest.com/pin/189432728063602965/
+    board: "Keto AI"
+    section: "[UX] Mobile"
+    for: [deep]
+    teaches: "Blue-black screens with soft luminous controls, one light per panel."
+    why_saved: null
+  - id: K01-29
+    url: https://www.pinterest.com/pin/189432728064851951/
+    board: "Keto AI"
+    section: "[UX] Mobile"
+    for: [deep]
+    teaches: "Black void with one luminous gradient ring; minimal, signal-light interface."
+    why_saved: null
+  - id: K06-05
+    url: https://www.pinterest.com/pin/189432728065194869/
+    board: "Keto AI"
+    section: "Motion"
+    for: [deep, constant]
+    teaches: "A single luminous orb on deep indigo: the light is the content."
+    why_saved: null
+  - id: K06-08
+    url: https://www.pinterest.com/pin/189432728067879365/
+    board: "Keto AI"
+    section: "Motion"
+    for: [deep]
+    teaches: "Glass bubble with water surface inside on black; literal water orb."
+    why_saved: null
+  - id: K09-01
+    url: https://www.pinterest.com/pin/189432728064294656/
+    board: "Keto AI"
+    section: "Print"
+    for: [deep]
+    teaches: "Navy with gold foil and pattern: dark as material, not as void."
+    why_saved: null
+  - id: D17-22
+    url: https://www.pinterest.com/pin/189432728064896768/
+    board: "Design"
+    section: "Print"
+    for: [deep, later:swiss]
+    teaches: "A monumental white numeral on a navy spread with tiny captions."
+    why_saved: null
+  - id: D19-22
+    url: https://www.pinterest.com/pin/189432728062650523/
+    board: "Design"
+    section: "Typography"
+    for: [deep]
+    teaches: "Gold filigree capital on dark card; luminous ornament on dark."
+    why_saved: null
+  - id: D13-14
+    url: https://www.pinterest.com/pin/189432728058516026/
+    board: "Design"
+    section: "Data visualization"
+    for: [deep, constant]
+    teaches: "Thin glowing chord arcs in a ring on flat teal."
+    why_saved: null
+  - id: D13-05
+    url: https://www.pinterest.com/pin/189432728058515971/
+    board: "Design"
+    section: "Data visualization"
+    for: [deep]
+    teaches: "A white-on-black density map: data as light on void."
+    why_saved: null
+  - id: A03-04
+    url: https://www.pinterest.com/pin/189432728069856919/
+    board: "Aquascaping"
+    section: "Nature Aquarium"
+    for: [deep]
+    teaches: "A glowing planted tank in a black room: depth lit from within."
+    why_saved: null
+  - id: A03-11
+    url: https://www.pinterest.com/pin/189432728069862146/
+    board: "Aquascaping"
+    section: "Nature Aquarium"
+    for: [deep]
+    teaches: "Red and green plants glowing in a dark room, LED rim light."
+    why_saved: null
+  - id: I06-02
+    url: https://www.pinterest.com/pin/189432728064969135/
+    board: "Illustration"
+    section: "Digital"
+    for: [deep]
+    teaches: "Cold blue sci-fi chasm with a ship; scale through void."
+    why_saved: null
+  - id: D14-04
+    url: https://www.pinterest.com/pin/189432728061762436/
+    board: "Design"
+    section: "Email"
+    for: [deep]
+    teaches: "Near-black with large pale numerals and thin caps labels."
+    why_saved: null
+  - id: B03-20
+    url: https://www.pinterest.com/pin/189432728052629437/
+    board: "Branding"
+    section: "z0lver"
+    for: [cyber, constant]
+    teaches: "Concentric cyan rings and arcs on black: the HUD dial."
+    why_saved: null
+  - id: B03-18
+    url: https://www.pinterest.com/pin/189432728052698120/
+    board: "Branding"
+    section: "z0lver"
+    for: [cyber]
+    teaches: "Holographic panels with corner-cut frames and ruled readouts in one cyan."
+    why_saved: null
+  - id: B03-17
+    url: https://www.pinterest.com/pin/189432728053912104/
+    board: "Branding"
+    section: "z0lver"
+    for: [cyber]
+    teaches: "Large radial readout (78%) and compass disc; luminous ring on dark blue field."
+    why_saved: null
+  - id: B03-11
+    url: https://www.pinterest.com/pin/189432728051878703/
+    board: "Branding"
+    section: "z0lver"
+    for: [cyber]
+    teaches: "Small UI kit: glowing arc progress, toggles, slider, all in one cyan."
+    why_saved: null
+  - id: D09-28
+    url: https://www.pinterest.com/pin/189432728065789692/
+    board: "Design"
+    section: "UI"
+    for: [cyber]
+    teaches: "Cyan HUD gauges and a wireframe glyph on black."
+    why_saved: null
+  - id: D01-04
+    url: https://www.pinterest.com/pin/189432728075394319/
+    board: "Design"
+    section: "Home lab"
+    for: [cyber]
+    teaches: "A boxed mono stat readout over a dot-matrix time grid, one mint accent."
+    why_saved: null
+  - id: D01-09
+    url: https://www.pinterest.com/pin/189432728075394312/
+    board: "Design"
+    section: "Home lab"
+    for: [cyber]
+    teaches: "Dense monochrome panel layout with hairline frames and tiny mono type."
+    why_saved: null
+  - id: D09-15
+    url: https://www.pinterest.com/pin/189432728066258760/
+    board: "Design"
+    section: "UI"
+    for: [cyber]
+    teaches: "A dark map with an orange point cloud, a clock readout and one orange button."
+    why_saved: null
+  - id: D09-59
+    url: https://www.pinterest.com/pin/189432728063361163/
+    board: "Design"
+    section: "UI"
+    for: [cyber]
+    teaches: "Grey-black map with a red numeric badge; signal colour on void."
+    why_saved: null
+  - id: D09-06
+    url: https://www.pinterest.com/pin/189432728067987019/
+    board: "Design"
+    section: "UI"
+    for: [cyber]
+    teaches: "Dark panels with green and yellow status lights."
+    why_saved: null
+  - id: D08-02
+    url: https://www.pinterest.com/pin/189432728065789688/
+    board: "Design"
+    section: "Industrial"
+    for: [cyber]
+    teaches: "A real machine-control console: screen, keypad, knobs."
+    why_saved: null
+  - id: D08-04
+    url: https://www.pinterest.com/pin/189432728065789684/
+    board: "Design"
+    section: "Industrial"
+    for: [cyber, idea:instrument]
+    teaches: "Control-room screens over physical keypads, blue-black with soft light; instrument console."
+    why_saved: null
+  - id: T01-18
+    url: https://www.pinterest.com/pin/e1_AfqPShy_A6Z2V5g6KFpzQesleF54bXCSvZpgUd1Y4U2rh-E8MBoJ/
+    board: "Tech"
+    section: "(all)"
+    for: [cyber]
+    teaches: "An exposed, LED-lit hardware build: mechanism as the image."
+    why_saved: null
+  - id: R03-07
+    url: https://www.pinterest.com/pin/189432728051332232/
+    board: "Resource"
+    section: "Web"
+    for: [cyber]
+    teaches: "Blue terminal menu with monospaced list and [COMPLETED] tags; mono readout as interface."
+    why_saved: null
+  - id: K02-03
+    url: https://www.pinterest.com/pin/189432728067986962/
+    board: "Keto AI"
+    section: "[UX] Desktop"
+    for: [cyber]
+    teaches: "Dark world-map readout, framed panel, glowing dots; direct cyber reference."
+    why_saved: null
+  - id: M02-02
+    url: https://www.pinterest.com/pin/189432728067975535/
+    board: "Miniatures"
+    section: "Tau"
+    for: [cyber]
+    teaches: "Top-down blue and rust vehicle on black: panelled hull, signal-orange stripes, readout feel."
+    why_saved: null
+  - id: I06-29
+    url: https://www.pinterest.com/pin/189432728058302711/
+    board: "Illustration"
+    section: "Digital"
+    for: [cyber]
+    teaches: "Hover-bike concepts: side-profile spec sheet with logo, labels and one teal-and-orange palette."
+    why_saved: null
+  - id: D10-02
+    url: https://www.pinterest.com/pin/189432728053912082/
+    board: "Design"
+    section: "HMI"
+    for: [cyber, constant]
+    teaches: "Physical controls with a single luminous blue accent in dark material."
+    why_saved: null
+  - id: D02-02
+    url: https://www.pinterest.com/pin/189432728075405461/
+    board: "Design"
+    section: "Smart Home"
+    for: [cyber, constant, idea:instrument]
+    teaches: "An instrument panel: black field, pale tiles, huge numerals, one burnt-orange arc."
+    why_saved: null
+  - id: D01-05
+    url: https://www.pinterest.com/pin/189432728075394317/
+    board: "Design"
+    section: "Home lab"
+    for: [constant, later:vellum]
+    teaches: "Amber-on-charcoal logo spec sheet with dimension lines and title block; Vellum drawing-set and Cyber at once."
+    why_saved: null
+  - id: K01-19
+    url: https://www.pinterest.com/pin/189432728064851947/
+    board: "Keto AI"
+    section: "[UX] Mobile"
+    for: [constant]
+    teaches: "Cited by the reader as evidence for this mood. See the section notes."
+    why_saved: null
+  - id: D01-03
+    url: https://www.pinterest.com/pin/189432728075394320/
+    board: "Design"
+    section: "Home lab"
+    for: [later:vellum]
+    teaches: "Technical floor-plan schematic with key legend on blue-slate; Vellum."
+    why_saved: null
+  - id: D12-13
+    url: https://www.pinterest.com/pin/189432728065213530/
+    board: "Design"
+    section: "Identity"
+    for: [later:vellum]
+    teaches: "Dark specimen sheet with component rows, large Aa; a system documented on one poster, Vellum-like."
+    why_saved: null
+  - id: D17-15
+    url: https://www.pinterest.com/pin/189432728065213653/
+    board: "Design"
+    section: "Print"
+    for: [later:vellum]
+    teaches: "Cited by the reader as evidence for this mood. See the section notes."
+    why_saved: null
+  - id: R01-05
+    url: https://www.pinterest.com/pin/189432728059435380/
+    board: "Resource"
+    section: "Design process"
+    for: [later:vellum]
+    teaches: "Cited by the reader as evidence for this mood. See the section notes."
+    why_saved: null
+  - id: T01-03
+    url: https://www.pinterest.com/pin/e1_AfqPShwgatgQkN-4w27pV8sd1JqBu1bxdYfwn0LPhmvONdx_SxwQ/
+    board: "Tech"
+    section: "(all)"
+    for: [later:vellum, idea:bench]
+    teaches: "Plain circuit schematic, blue LEDs and labelled lines on white; diagram as instrument."
+    why_saved: null
+  - id: D17-23
+    url: https://www.pinterest.com/pin/189432728064896766/
+    board: "Design"
+    section: "Print"
+    for: [later:swiss]
+    teaches: "Cited by the reader as evidence for this mood. See the section notes."
+    why_saved: null
+  - id: D17-24
+    url: https://www.pinterest.com/pin/189432728064896765/
+    board: "Design"
+    section: "Print"
+    for: [later:swiss]
+    teaches: "Cited by the reader as evidence for this mood. See the section notes."
+    why_saved: null
+  - id: K07-05
+    url: https://www.pinterest.com/pin/189432728065003397/
+    board: "Keto AI"
+    section: "Decks"
+    for: [later:swiss]
+    teaches: "Cited by the reader as evidence for this mood. See the section notes."
+    why_saved: null
+  - id: K14-09
+    url: https://www.pinterest.com/pin/189432728065003830/
+    board: "Keto AI"
+    section: "Signage & way finding"
+    for: [later:swiss]
+    teaches: "Red chevrons across a wall; direction as the entire graphic."
+    why_saved: null
+  - id: D07-05
+    url: https://www.pinterest.com/pin/189432728065249356/
+    board: "Design"
+    section: "Graphics"
+    for: [later:field-guide]
+    teaches: "Cited by the reader as evidence for this mood. See the section notes."
+    why_saved: null
+  - id: D07-10
+    url: https://www.pinterest.com/pin/189432728064896913/
+    board: "Design"
+    section: "Graphics"
+    for: [later:field-guide]
+    teaches: "Faceted line icons of leaves in a grid; mono-weight stroke."
+    why_saved: null
+  - id: R04-06
+    url: https://www.pinterest.com/pin/189432728057786471/
+    board: "Resource"
+    section: "UX"
+    for: [later:field-guide]
+    teaches: "Engraved printing press; a machine drawn as a plate."
+    why_saved: null
+  - id: A04-09
+    url: https://www.pinterest.com/pin/189432728065079340/
+    board: "Aquascaping"
+    section: "Iwagumi"
+    for: [later:field-guide]
+    teaches: "Same tank in three frames with composition lines: drawing-set feeling."
+    why_saved: null
+  - id: K04-01
+    url: https://www.pinterest.com/pin/189432728067879763/
+    board: "Keto AI"
+    section: "Email"
+    for: [later:ledger]
+    teaches: "Cited by the reader as evidence for this mood. See the section notes."
+    why_saved: null
+  - id: D19-10
+    url: https://www.pinterest.com/pin/189432728064882087/
+    board: "Design"
+    section: "Typography"
+    for: [idea:letterpress]
+    teaches: "Red-ink flourish S with construction grid and pen; the process drawn, not just the result."
+    why_saved: null
+  - id: D17-34
+    url: https://www.pinterest.com/pin/189432728047628000/
+    board: "Design"
+    section: "Print"
+    for: [idea:letterpress]
+    teaches: "Cited by the reader as evidence for this mood. See the section notes."
+    why_saved: null
+  - id: D19-27
+    url: https://www.pinterest.com/pin/189432728048662774/
+    board: "Design"
+    section: "Typography"
+    for: [idea:letterpress]
+    teaches: "Cited by the reader as evidence for this mood. See the section notes."
+    why_saved: null
+  - id: D02-06
+    url: https://www.pinterest.com/pin/189432728075394305/
+    board: "Design"
+    section: "Smart Home"
+    for: [idea:instrument]
+    teaches: "Dot-matrix calendar, one orange dot; restraint."
+    why_saved: null
+  - id: T01-28
+    url: https://www.pinterest.com/pin/e1_AfqPShwgPs7uKd1X1p-nLIuXM4Y3ndtJjiG5iNR-sHOeyz3BtYC4/
+    board: "Tech"
+    section: "(all)"
+    for: [idea:bench]
+    teaches: "Cited by the reader as evidence for this mood. See the section notes."
+    why_saved: null

@@ -181,6 +181,29 @@ Decisions this records:
   brainstorm, not requirements. They are in `../design/mood-ideas.md`.
 - The six questions stay open and do not block the build.
 
+## Pinterest as a source (2026-11-24)
+
+Tucker, verbatim:
+
+> Finally, use my Pinterest boards for additional sources of visual inspiration
+
+A link to his public profile came with it. Then, verbatim:
+
+> Of course once it lands update the prompt, bars, and outputs so I clear and get going. Grill me about it if you need.
+
+Three choices were put to him with recommendations and a note that silence
+would mean yes. He did not answer, so the recommendations stand as
+assumptions:
+
+- The reference study stays the blind, like-for-like comparison. His pins
+  are the craft ceiling the critic measures against.
+- The design boards, Aquascaping and Miniatures are named in this repo. A
+  few personal boards inform the taste rules and are not named.
+- The studies are not re-rendered. The build absorbs the new input.
+
+The read is in `../design/references/README.md`. Five questions it raised
+for Tucker are listed at the end of that file.
+
 ## The privacy line, as Tucker gave it
 
 From the withheld part of his opening message and from Round 1. Never on the

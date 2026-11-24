@@ -137,6 +137,9 @@ and LinkedIn. `[assumption]`
   the site is Still Water. `[assumption]`
 - Each mood is one stylesheet over a small, fixed set of components, and the
   build checks a screenshot of the key pages in every mood. `[assumption]`
+- The moods draw on Tucker's own saved inspiration. `[interview]` Each launch
+  mood is judged against its reference study as the floor and a set of his
+  pins as the ceiling. `[assumption]`
 
 ### Should
 
@@ -232,8 +235,9 @@ minutes; adding an entry takes under ten minutes. `[assumption]`
 - Domain registrar and current host.
 - Which moods come after the first three, and what each stands for. Ideas
   and six open questions are in `design/mood-ideas.md`. Tucker invited more.
-- The quality bar is each mood's own reference study, in `design/`. Tucker
-  has not chosen an outside reference site.
+- The read of his boards raised five questions about accent, paper, serif
+  and Cyber's second signal. They are at the end of
+  `design/references/README.md`.
 
 ## Source links
 
@@ -244,6 +248,8 @@ minutes; adding an entry takes under ten minutes. `[assumption]`
 - `design/README.md`: the moods, their reference studies and the switching
   contract
 - `design/mood-ideas.md`: suggested moods for later, and what each stands for
+- `design/references/`: what his Pinterest boards say about his taste, and
+  the pins that set the bar
 - `source/`: the board frames, the case-study artifacts and the manual
 - The public portfolio board: https://miro.com/app/board/o9J_lLhlDmc=/
 - The legacy 2021 site: branch `develop` of this repo

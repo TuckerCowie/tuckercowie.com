@@ -30,7 +30,7 @@ Vellum a detail marker. It could be made deliberate.
 | Deep Water | The depth and foresight | "Runs deep"; Futuristic (his manual) | Launch |
 | Cyber | The gamer | His words; game interfaces and an eSports startup early in his career | Launch |
 | Swiss | The designer | His words | Study ready |
-| Vellum | The systems thinker | "I see systems as structures" (his manual); years in AEC software; service blueprints | Spec ready |
+| Vellum | The systems thinker | "I see systems as structures" (his manual); years in AEC software; service blueprints | Study ready |
 | Workshop | The facilitator and coach | Design sprints and facilitation (his board); Relator, Developer (his manual) | Idea |
 | Ledger | The analyst | Analytical (his manual). The content with nothing on it: plain text, the way an agent reads it | Idea |
 | Darkroom | The photographer | Photography runs from his first site to now. A lens is how you see what someone else sees | Idea; needs his photographs |
@@ -38,6 +38,29 @@ Vellum a detail marker. It could be made deliberate.
 | Field Guide | The explorer | His mission: "to explore deeply and share faithfully"; Learner (his manual) | Idea |
 
 Sides not yet given a mood: the teacher, the maker, the writer.
+
+## What his Pinterest boards add
+
+His boards were read on 2026-11-24. The read is in
+[`references/README.md`](references/README.md). In short:
+
+- The circle is already his. Ring gauges, rotary knobs, chord diagrams,
+  concentric rings and ripples recur across unrelated boards.
+- Vellum has strong evidence, Field Guide and Ledger have good evidence, and
+  Swiss is supported in print with yellow as the accent more often than red.
+- Workshop has little evidence there. His portfolio board is its evidence.
+- Liner Notes is weak as music and stronger as letterpress and hand
+  lettering.
+
+More sides the boards suggest, each a possible mood:
+
+| Mood | The side of Tucker | What it would look like |
+|---|---|---|
+| Instrument | The instrument maker | Pale panels, dials, dot-matrix displays, huge numerals, one orange accent |
+| Bench | The tinkerer | Exposed boards, labelled parts, pinouts and schematics on a work surface |
+| Letterpress | The hand-letterer | Cream paper, black ink, flourished capitals, the pen in frame |
+| Aquascape | The aquascaper | Miniature landscapes in glass, lit in a dark room. It also feeds both water moods |
+| Wayfinding | The wayfinder | Big arrows, numerals and colour-coded routes at building scale |
 
 ## Open questions
 

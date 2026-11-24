@@ -66,3 +66,21 @@ changes.
 **Known risk to manage.** This can read as merely a document and undersell
 his visual range. Counter it with typographic precision and by giving the
 artifacts real size, never with decoration.
+
+## From Tucker's boards
+
+Read from his own saved inspiration. See `../../references/README.md`.
+
+- **Borrow:** one oversized numeral or ring as a page's hero; huge numerals
+  beside tiny uppercase labels; specimen grids for collections; dense
+  tables made calm with low contrast and thin rules.
+- **Hold against his saves:** the cool paper, the teal accent and the serif
+  come from his manual. His saves lean to warm cream, orange or yellow, and
+  no serif display. The manual wins unless he says otherwise.
+
+## The bar
+
+- **Floor:** this folder's study (`home.jpg`, `case-study.jpg`,
+  `specimen.jpg`). Compare the built page with it blind, like for like.
+- **Ceiling:** these pins in `../../references/references.yaml`:
+  `K01-02`, `K01-17`, `K02-10`, `K04-04`, `K10-11`, `D20-11`, `D02-10`, `D17-07`, `D17-06`, `D07-07`, `D13-13`, `D21-01`, `A04-08`. The critic names where the built page falls short of them.

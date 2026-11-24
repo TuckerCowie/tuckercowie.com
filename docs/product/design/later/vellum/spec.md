@@ -1,5 +1,4 @@
 # Mood: Vellum
-
 **Idea.** The drafting table. The site is a drawing set on tracing vellum:
 each band is a sheet with a border, grid references in the margins, a title
 block, numbered details with leader lines, and redline markups for what
