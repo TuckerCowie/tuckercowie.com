@@ -108,10 +108,17 @@ and LinkedIn. `[assumption]`
 
 ### Must: moods
 
-- The site has five moods: **Still Water** (light, the default), **Deep
-  Water** (dark), **Swiss**, **Cyber** and **Vellum**. `[interview]` Vellum is
-  the designer's choice, as Tucker asked for a third of the designer's own
-  making. `[interview]`
+- The site launches with three moods: **Still Water** (light, the default),
+  **Deep Water** (dark) and **Cyber**. `[interview]`
+- More moods follow later. Swiss and Vellum have reference material ready,
+  and further ideas are in `design/mood-ideas.md`. All of them are
+  suggestions and an invitation to brainstorm, not requirements.
+  `[interview]`
+- Each mood stands for a side of Tucker. Cyber is the gamer. Swiss, when it
+  comes, is the designer. `[interview]`
+- The aim of the site is craft: the content stands alone, and it is fully
+  conveyed under every mood. Tucker will not compromise on this.
+  `[interview]`
 - Still Water and Deep Water act as the light and dark modes of the site.
   `[interview]` With no parameter and no saved choice, a visitor sees Still
   Water, or Deep Water if their system asks for dark. `[assumption]`
@@ -209,7 +216,7 @@ minutes; adding an entry takes under ten minutes. `[assumption]`
 | 3 | The site stays maintained `[assumption]` | High | Time one new entry, and have an agent add one from a sentence | Adding an entry needs layout or code work |
 | 4 | The manual and the systems map help the first reader instead of distracting `[assumption]` | Medium | First-click test on the home screen with three people | Readers looking for work examples cannot find them in one click |
 | 5 | Employers and clients allow what is shown `[assumption]` | High | Confirm per entry before its visibility changes to public | An entry cannot be cleared. It stays draft |
-| 6 | One body of markup can carry five fundamentally different layouts `[assumption]` | High | Build the home screen and one case study in all five moods before anything else | A mood needs its own markup. That mood becomes a styling-only variant or is cut |
+| 6 | One body of markup can carry fundamentally different layouts `[assumption]` | High | Build the home screen and one case study in all three launch moods before anything else | A mood needs its own markup. That mood becomes a styling-only variant or is cut |
 | 7 | The mood switcher helps first readers and does not distract them `[assumption]` | Medium | Watch three first readers on the home screen | They play with moods and do not open the work. The switcher moves to the footer |
 
 ## Open questions
@@ -223,8 +230,8 @@ minutes; adding an entry takes under ten minutes. `[assumption]`
 - One line per assessment, in Tucker's words.
 - The address to publish for the email link, and the portrait to use.
 - Domain registrar and current host.
-- Whether five moods is the right number once they are live. Each is cheap
-  to remove.
+- Which moods come after the first three, and what each stands for. Ideas
+  and six open questions are in `design/mood-ideas.md`. Tucker invited more.
 - The quality bar is each mood's own reference study, in `design/`. Tucker
   has not chosen an outside reference site.
 
@@ -234,8 +241,9 @@ minutes; adding an entry takes under ten minutes. `[assumption]`
 - `research/interview.md`: interview log and verdict, 2026-11-24
 - `research/portfolio-audit.md`: the board, the past sites, the grammar
 - `research/systems-map.md`: source material for the Systems page
-- `design/README.md`: the five moods, their reference studies and the
-  switching contract
+- `design/README.md`: the moods, their reference studies and the switching
+  contract
+- `design/mood-ideas.md`: suggested moods for later, and what each stands for
 - `source/`: the board frames, the case-study artifacts and the manual
 - The public portfolio board: https://miro.com/app/board/o9J_lLhlDmc=/
 - The legacy 2021 site: branch `develop` of this repo

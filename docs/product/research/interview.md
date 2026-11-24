@@ -156,6 +156,31 @@ component is designed and checked five times, so the build keeps a small
 fixed set of components, one stylesheet per mood and a screenshot check per
 mood._
 
+## Moods as sides of Tucker (2026-11-24)
+
+Tucker, verbatim:
+
+> Let's stretch this even further: each mood should symbolically represent an aspect of me or my personality. For example, the cyber punk is a representation of my inner gander while Swiss represents my design side. What other themes and moods might you infer or propose based on my experience, strengths, and attributes? Grill me if needed. Yes, the craftsmanship required to ensure that both the content stands alone yet is perfectly conveyed under each mood is the aim of the site: I am a shape shifter who can empathize and see multiple perspectives. I am also a designer with strong pattern recognition and systems thinking. I will not compromise on any of it and want to flex it all.
+
+_Interpretation: "inner gander" is read as "inner gamer"._
+
+A frame, a shared motif and a roster of ten moods were proposed, with six
+questions. Tucker's reply, verbatim:
+
+> Include those as suggestions not requirements and as an invitation to brainstorm more- but not block forward progress. Start with light dark and cyber for now. We'll follow up later to implement the rest. Land the goal and prompt now
+
+Decisions this records:
+
+- Each mood stands for a side of Tucker. Cyber is the gamer. Swiss is the
+  designer.
+- The aim of the site is craft: content that stands alone and is fully
+  conveyed under every mood.
+- The site launches with three moods: light (Still Water), dark (Deep Water)
+  and Cyber. The rest follow later.
+- The proposed frame, motif and roster are suggestions and an invitation to
+  brainstorm, not requirements. They are in `../design/mood-ideas.md`.
+- The six questions stay open and do not block the build.
+
 ## The privacy line, as Tucker gave it
 
 From the withheld part of his opening message and from Round 1. Never on the

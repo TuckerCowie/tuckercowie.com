@@ -29,7 +29,7 @@ deploy:
 links:
   product_home: docs/product/
   vault: null
-next_action: "Run the build goal against docs/product/intent.md and docs/product/design/"
+next_action: "Run the build goal: three launch moods (Still Water, Deep Water, Cyber) from docs/product/intent.md and docs/product/design/"
 blocked_on: null
 kill_thresholds: []
 runs:

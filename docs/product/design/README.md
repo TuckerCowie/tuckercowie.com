@@ -1,21 +1,26 @@
-# Design: five moods, one body of content
+# Design: one body of content, several moods
 
-The site has one set of content and five ways of presenting it. A visitor
+The site has one set of content and several ways of presenting it. A visitor
 switches between them in one click, or arrives in one by link.
 
-This folder holds the reference study for each mood. A study is a full page
+The aim, in Tucker's words: "the craftsmanship required to ensure that both
+the content stands alone yet is perfectly conveyed under each mood is the aim
+of the site." Each mood stands for a side of him.
+
+This folder holds a reference study for each mood. A study is a full page
 rendered from the same real content. It is a reference for look, tokens and
 layout intent. It is not code to copy.
 
-## The moods
+## Launch moods
 
-| Id | Name | Role | The idea | Variance, Motion, Density |
-|---|---|---|---|---|
-| `still` | Still Water | Light mode, the default | Tucker's manual extended to a whole site: a quiet reading surface | 3, 2, 3 |
-| `deep` | Deep Water | Dark mode | The same water from below: dark ground, monumental serif, one luminous accent | 7, 6, 3 |
-| `swiss` | Swiss | Alternate | The International Typographic Style, executed with extreme rigor | 4, 1, 5 |
-| `cyber` | Cyber | Alternate | A futuristic, virtual, cyberpunk interface with calm, legible reading | 8, 7, 7 |
-| `vellum` | Vellum | Alternate | The drafting table: the site as a drawing set, with redline markups | 6, 2, 6 |
+| Id | Name | Role | Stands for | The idea | Variance, Motion, Density |
+|---|---|---|---|---|---|
+| `still` | Still Water | Light mode, the default | The steady presence | Tucker's manual extended to a whole site: a quiet reading surface | 3, 2, 3 |
+| `deep` | Deep Water | Dark mode | The depth underneath | The same water from below: dark ground, monumental serif, one luminous accent | 7, 6, 3 |
+| `cyber` | Cyber | Alternate | The gamer | A futuristic, virtual, cyberpunk interface with calm, legible reading | 8, 7, 7 |
+
+"The gamer" is Tucker's own reading of Cyber. The two readings of the water
+moods are a suggestion.
 
 Each mood has a folder under [`moods/`](moods/):
 
@@ -25,27 +30,39 @@ Each mood has a folder under [`moods/`](moods/):
 - `home.jpg`, `case-study.jpg`, `specimen.jpg`: the study at 1440 wide, scaled
   to 1200. The specimen prints every token and type style.
 
-A sixth direction, Workbench, was rendered and dropped. It is not here.
+## Later moods
+
+Not part of the first build. The build must make each one cheap to add.
+
+- [`later/swiss/`](later/swiss/): a full reference pack. Stands for the
+  designer.
+- [`later/vellum/`](later/vellum/): a spec. Stands for the systems thinker.
+- [`mood-ideas.md`](mood-ideas.md): more suggested moods, a unifying frame
+  and the questions still open. Suggestions and an invitation to brainstorm,
+  not requirements.
+
+A direction called Workbench was rendered and dropped. It is not here.
 
 ## The mood contract
 
 These are requirements. How they are met is the builder's call.
 
-1. **Content is written once.** A mood changes style and layout. It never
-   adds, removes or rewrites content. Adding or removing a mood touches no
-   content file.
+1. **Content is written once.** A mood changes style and layout, as
+   fundamentally as it needs to. It never adds, removes or rewrites content.
+   Adding or removing a mood touches no content file.
 2. **A small, fixed set of components.** Every mood styles the same set:
    home, index and filters, summary plate, details, process plate, insight,
-   works ledger, profile blocks, pipeline, specimen, navigation, switcher.
-   A new component is designed in all five moods before it ships.
-3. **One stylesheet per mood**, and one registry that lists the moods. That
-   registry feeds the switcher, the URL handling and the checks.
+   works ledger, profile blocks, pipeline, navigation, switcher. A new
+   component is designed in every mood before it ships.
+3. **One stylesheet per mood**, and one registry that lists the moods. The
+   registry feeds the switcher, the URL handling and the checks. Adding a
+   mood is one stylesheet and one registry line.
 4. **The switcher is minimal.** One small control on every page, one click to
    change mood, usable by keyboard, announced to assistive technology.
-5. **A URL parameter selects the mood.** Proposed form `?mood=swiss`. Order of
+5. **A URL parameter selects the mood.** Proposed form `?mood=cyber`. Order of
    precedence: the URL parameter, then the visitor's saved choice, then
-   system light or dark (Still Water or Deep Water), then Still Water.
-   A mood chosen by URL carries across internal links.
+   system light or dark (Still Water or Deep Water), then Still Water. A mood
+   chosen by URL carries across internal links.
 6. **Seamless.** No page reload to switch. No flash of the wrong mood on first
    paint. With scripting off, the site is Still Water, or Deep Water where
    the system asks for dark.
@@ -67,8 +84,7 @@ These are requirements. How they are met is the builder's call.
   frames.
 
 Named exceptions live in the mood's own spec. Cyber may use two signal
-colours and a restrained glow. Vellum pairs a structural blue line with one
-red markup accent.
+colours and a restrained glow.
 
 ## Critic's notes on the studies
 
@@ -77,6 +93,8 @@ red markup accent.
   the reading column.
 - **Deep Water.** The strongest first screen. A long case study on a dark
   ground is tiring, so keep the pale mats and a generous leading.
+- **Cyber.** The frame carries the spectacle and the reading stays calm,
+  which is the right split. Keep readouts to real data only.
 - **All studies.** None renders a written case study with no images, which
   the brief requires. Lines tagged draft in a study are placeholders, not
   content.

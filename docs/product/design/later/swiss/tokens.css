@@ -1,0 +1,86 @@
+/* Tokens from the swiss reference study. Starting values for the build, not a constraint. */
+
+:root{
+  /* colour */
+  --white:oklch(0.99 0 0);
+  --black:oklch(0.16 0 0);
+  --grey:oklch(0.46 0 0);
+  --tint:oklch(0.95 0 0);
+  --red:oklch(0.56 0.22 27);
+  /* family */
+  --font-sans:"Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif;
+  /* unit and space, every step a multiple of 8px */
+  --unit:8px;
+  --space-1:calc(var(--unit) * 1);
+  --space-2:calc(var(--unit) * 2);
+  --space-3:calc(var(--unit) * 3);
+  --space-4:calc(var(--unit) * 4);
+  --space-6:calc(var(--unit) * 6);
+  --space-8:calc(var(--unit) * 8);
+  --space-12:calc(var(--unit) * 12);
+  --space-16:calc(var(--unit) * 16);
+  --space-24:calc(var(--unit) * 24);
+  /* type scale, ratio 4:3 from 16px, rounded to whole pixels */
+  --fs-0:0.75rem;      --lh-0:1rem;      /* 12 / 16 */
+  --fs-1:1rem;         --lh-1:1.5rem;    /* 16 / 24 */
+  --fs-2:1.3125rem;    --lh-2:2rem;      /* 21 / 32 */
+  --fs-3:1.75rem;      --lh-3:2rem;      /* 28 / 32 */
+  --fs-4:2.375rem;     --lh-4:2.5rem;    /* 38 / 40 */
+  --fs-5:3.1875rem;    --lh-5:3.5rem;    /* 51 / 56 */
+  --fs-6:4.1875rem;    --lh-6:4.5rem;    /* 67 / 72 */
+  --fs-7:5.625rem;     --lh-7:6rem;      /* 90 / 96 */
+  --fs-8:7.5rem;       --lh-8:7.5rem;    /* 120 / 120 */
+  /* radius and rules */
+  --radius:0;
+  --rule-1:1px;
+  --rule-2:2px;
+  /* grid, narrow default */
+  --cols:4;
+  --gutter:16px;
+  --margin:24px;
+  --measure:1344px;
+  /* roles, narrow default; each role names a step of the scale */
+  --v-name:var(--fs-5);   --v-name-l:var(--lh-5);
+  --v-num:var(--fs-4);    --v-num-l:var(--lh-4);
+  --v-h2:var(--fs-4);     --v-h2-l:var(--lh-4);
+  --v-h3:var(--fs-3);     --v-h3-l:var(--lh-3);
+  --v-big:var(--fs-4);    --v-big-l:var(--lh-4);
+  --v-stat:var(--fs-7);   --v-stat-l:var(--lh-7);
+  --v-row:var(--fs-2);    --v-row-l:var(--lh-2);
+  --v-year:var(--fs-2);   --v-year-l:var(--lh-2);
+}
+
+:root{--margin:32px}
+
+:root{--gutter:24px;--margin:32px;
+    --v-name:var(--fs-7);--v-name-l:var(--lh-7);
+    --v-num:var(--fs-5);--v-num-l:var(--lh-5);
+    --v-h2:var(--fs-5);--v-h2-l:var(--lh-5);
+    --v-h3:var(--fs-4);--v-h3-l:var(--lh-4);
+    --v-big:var(--fs-5);--v-big-l:var(--lh-5);
+    --v-stat:var(--fs-8);--v-stat-l:var(--lh-8);
+  }
+
+:root{--cols:12;--margin:48px;
+    --v-name:var(--fs-7);--v-name-l:var(--lh-7);
+    --v-num:var(--fs-6);--v-num-l:var(--lh-6);
+    --v-h2:var(--fs-5);--v-h2-l:var(--lh-5);
+    --v-h3:var(--fs-4);--v-h3-l:var(--lh-4);
+    --v-big:var(--fs-5);--v-big-l:var(--lh-5);
+    --v-stat:var(--fs-7);--v-stat-l:var(--lh-7);
+    --v-row:var(--fs-1);--v-row-l:var(--lh-1);
+    --v-year:var(--fs-2);--v-year-l:var(--lh-2);
+  }
+
+:root{
+    --v-name:var(--fs-8);--v-name-l:var(--lh-8);
+    --v-num:var(--fs-7);--v-num-l:var(--lh-7);
+    --v-h2:var(--fs-6);--v-h2-l:var(--lh-6);
+    --v-h3:var(--fs-5);--v-h3-l:var(--lh-5);
+    --v-big:var(--fs-6);--v-big-l:var(--lh-6);
+    --v-stat:var(--fs-8);--v-stat-l:var(--lh-8);
+    --v-row:var(--fs-2);--v-row-l:var(--lh-2);
+    --v-year:var(--fs-3);--v-year-l:var(--lh-3);
+  }
+
+:root{--v-name:var(--fs-4);--v-name-l:var(--lh-4);--v-stat:var(--fs-6);--v-stat-l:var(--lh-6)}
