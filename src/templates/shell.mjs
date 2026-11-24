@@ -57,13 +57,13 @@ ${moods.map((m) => html`<button type="button" class="switcher__btn" data-mood-se
 <main id="main" tabindex="-1">
 ${body}
 </main>
-<footer class="site-foot c" data-c="foot">
+${page === 'home' ? (ctx.content.preview ? html`<footer class="site-foot c" data-c="foot">${orn()}<p class="foot__preview">Preview build. Drafts are included and nothing here is approved yet.</p></footer>` : '') : html`<footer class="site-foot c" data-c="foot">
 ${orn()}
 <p class="foot__name">${site.name}</p>
 <p class="foot__action">${emailLink(ctx, 'foot__email')}</p>
 <p class="foot__top"><a href="#main">Back to top</a></p>
 ${ctx.content.preview ? html`<p class="foot__preview">Preview build. Drafts are included and nothing here is approved yet.</p>` : ''}
-</footer>
+</footer>`}
 <p class="vh" id="mood-status" role="status" aria-live="polite"></p>
 <script type="application/json" id="mood-config">${raw(JSON.stringify(ctx.moodConfig).replace(/</g, '\\u003c'))}</script>
 </body>
