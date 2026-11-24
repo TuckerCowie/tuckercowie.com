@@ -1,4 +1,8 @@
-public/bundle.js
-node_modules
-npm-debug.log
-.sublime-*
+node_modules/
+dist/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+var/

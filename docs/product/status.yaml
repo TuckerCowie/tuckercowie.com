@@ -1,0 +1,42 @@
+# product-status/v1: machine-readable project ledger.
+# Snapshot block: overwrite freely. runs: append-only (supersede, never delete).
+schema: product-status/v1
+slug: tuckercowie-com
+name: tuckercowie.com
+brand_name: Tucker Cowie
+one_liner: >-
+  Tucker Cowie's portfolio: the work and how it was made, how to work with
+  him, and the system he builds with.
+status: idea
+context: personal
+mode: passion
+stakes_tier: solo
+areas: [work/products]
+rules_review:
+  version: null
+  date: null
+repo: tuckercowie.com
+canonical_remote: github
+mirror:
+  github: https://github.com/TuckerCowie/tuckercowie.com
+  sync_on_commit: null
+  last_error: null
+  verified: null
+deploy:
+  env: null
+  url: null
+  pipeline: null
+links:
+  product_home: docs/product/
+  vault: null
+next_action: "Tucker locks one visual direction; then run the build goal against docs/product/intent.md"
+blocked_on: "Direction lock (Tucker); Round 2 project capture (Tucker)"
+kill_thresholds: []
+runs:
+  - skill: bip
+    stage: ideate
+    date: 2026-11-24
+    status: done
+    artifacts: [docs/product/research/braindump.md, docs/product/research/interview.md, docs/product/intent.md]
+    headline: "One ledger, three doors (Work, Profile, Systems) in the board's case-study grammar; verdict Strong with one named weakness (nothing written up after 2021); proceed, capturing post-2021 projects in writing"
+updated: 2026-11-24
