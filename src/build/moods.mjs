@@ -76,7 +76,7 @@ export function readToken(flatCss, token) {
 // rendering, so the first paint is never the wrong mood.
 export function moodHead({ u, themeColors }) {
   const map = Object.fromEntries(moods.map((m) => [m.id, m.scheme]));
-  const base = u('/moods/');
+  const base = u('/moods/', { dir: true });
   const script =
     `!function(d,M,B){var r=d.documentElement,m,f,h=Object.prototype.hasOwnProperty;` +
     `try{m=new URLSearchParams(location.search).get(${JSON.stringify(param)})}catch(e){}` +

@@ -23,7 +23,7 @@ export const STATUSES = {
 };
 
 const text = z.string().trim().min(1);
-const noEmDash = (s) => !/[—–]/.test(s);
+const noEmDash = (s) => !/[\u2014\u2013]/.test(s);
 
 const link = z.strictObject({ label: text, href: z.string().regex(/^(https:\/\/|\/)/, 'A link must start with https:// or /') });
 
@@ -178,8 +178,8 @@ function loadEntry(file, root, errors) {
   try { fm = splitFrontmatter(source, shown); } catch (e) { errors.push(e); return null; }
   const data = validateYaml(fm.yaml, entrySchema, shown, 2, errors);
   if (!data) return null;
-  if (/[—–]/.test(fm.body)) {
-    const i = fm.body.split('\n').findIndex((l) => /[—–]/.test(l));
+  if (/[\u2014\u2013]/.test(fm.body)) {
+    const i = fm.body.split('\n').findIndex((l) => /[\u2014\u2013]/.test(l));
     errors.push(new ContentError(shown, fm.bodyLine + i + 1, 'The body contains an em or en dash. Use a comma, a colon or "to".'));
   }
   const hasPlates = data.type === 'case-study' || data.type === 'workshop';
@@ -217,8 +217,8 @@ function loadMarkdownFile(file, schema, root, errors) {
   let fm;
   try { fm = splitFrontmatter(source, shown); } catch (e) { errors.push(e); return null; }
   const data = validateYaml(fm.yaml, schema, shown, 2, errors);
-  if (/[—–]/.test(fm.body)) {
-    const i = fm.body.split('\n').findIndex((l) => /[—–]/.test(l));
+  if (/[\u2014\u2013]/.test(fm.body)) {
+    const i = fm.body.split('\n').findIndex((l) => /[\u2014\u2013]/.test(l));
     errors.push(new ContentError(shown, fm.bodyLine + i + 1, 'The body contains an em or en dash. Use a comma, a colon or "to".'));
   }
   return data ? { ...data, body: fm.body, bodyLine: fm.bodyLine } : null;

@@ -38,13 +38,16 @@ function write(rel, data) {
 
 // Maps a site path ("/work/", "/css/base.css") to a URL for the page at `from`.
 function urlFor(from) {
-  return (target) => {
+  // `dir: true` asks for a directory prefix to build URLs on ("/moods/"),
+  // not a link to that directory's index page.
+  return (target, { dir = false } = {}) => {
     if (/^(https?:|mailto:|#)/.test(target)) return target;
     if (!relative) return BASE.replace(/\/$/, '') + target;
     const [pathname, hash = ''] = target.split('#');
     const fromDir = from.endsWith('/') ? from : path.posix.dirname(from) + '/';
+    if (dir) { const r = path.posix.relative(fromDir, pathname); return r ? r + '/' : './'; }
     const file = pathname.endsWith('/') ? pathname + 'index.html' : pathname;
-    let rel = path.posix.relative(fromDir, file) || 'index.html';
+    const rel = path.posix.relative(fromDir, file) || 'index.html';
     return rel + (hash ? '#' + hash : '');
   };
 }
@@ -69,7 +72,11 @@ async function main() {
   // ---- moods ----
   const themeColors = {};
   const tokenDump = {};
+  // MOOD_ONLY=cyber,deep compiles only those moods and writes empty sheets
+  // for the rest, so someone working on one mood is not blocked by another.
+  const only = process.env.MOOD_ONLY ? process.env.MOOD_ONLY.split(',') : null;
   for (const mood of moods) {
+    if (only && !only.includes(mood.id)) { write(`moods/${mood.id}.css`, `/* ${mood.name}: not compiled in this build (MOOD_ONLY). */\n`); themeColors[mood.id] = mood.scheme === 'dark' ? '#000' : '#fff'; tokenDump[mood.id] = {}; continue; }
     const { css, flat } = compileMood(mood, { srcDir: path.join(root, 'src/moods') });
     write(`moods/${mood.id}.css`, css);
     themeColors[mood.id] = readToken(flat, mood.themeToken) ?? (mood.scheme === 'dark' ? '#000' : '#fff');
@@ -117,7 +124,7 @@ async function main() {
     const ctx = {
       content, u, page: p.path, preview,
       moodHead: moodHead({ u, themeColors }),
-      moodConfig: { ...moodClientConfig({ themeColors }), base: u('/moods/') },
+      moodConfig: { ...moodClientConfig({ themeColors }), base: u('/moods/', { dir: true }) },
     };
     const out = p.path.endsWith('/') ? p.path + 'index.html' : p.path;
     write(out.replace(/^\//, ''), String(ctx ? p.render(ctx) : ''));

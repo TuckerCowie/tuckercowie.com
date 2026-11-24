@@ -35,7 +35,8 @@ export function attrs(map) {
 }
 
 export const slugify = (s) =>
-  String(s).toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '')
-    .replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  String(s).toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/&/g, ' and ').replace(/(?<=\b[a-z])\.(?=[a-z]\b|\s|$)/g, '')   // A.I. -> ai
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
 export const pad2 = (n) => String(n).padStart(2, '0');

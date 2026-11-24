@@ -1,6 +1,7 @@
 // Capture every frame of Tucker's public portfolio board as a PNG.
 //
 //   node tools/capture-board.mjs <out-dir>
+//   SCALE=2 node tools/capture-board.mjs <out-dir>     twice the pixels, for sharper artifacts
 //
 // Needs Playwright with Chromium. The board loads from several hosts, so a
 // restricted network must allow: miro.com, mirostatic.com, r.miro.com,
@@ -22,7 +23,7 @@ fs.mkdirSync(out, { recursive: true });
 const VW = 2400, VH = 1350, ROW = 174; // ROW: height of one entry in the Frames panel
 const proxy = process.env.HTTPS_PROXY ? { server: process.env.HTTPS_PROXY } : undefined;
 const browser = await chromium.launch({ proxy, args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
-const page = await (await browser.newContext({ viewport: { width: VW, height: VH } })).newPage();
+const page = await (await browser.newContext({ viewport: { width: VW, height: VH }, deviceScaleFactor: Number(process.env.SCALE ?? 1) })).newPage();
 
 await page.goto(BOARD, { waitUntil: 'domcontentloaded', timeout: 60000 });
 await page.waitForTimeout(30000); // the canvas and its images take a while
