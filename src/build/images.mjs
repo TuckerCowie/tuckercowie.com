@@ -9,11 +9,15 @@ import crypto from 'node:crypto';
 import sharp from 'sharp';
 
 const WIDTHS = [480, 800, 1200, 1600, 2400];
+const SETTINGS = { avif: { quality: 62, effort: 4 }, webp: { quality: 84 }, jpg: { quality: 86, mozjpeg: true } };
 const FORMATS = {
-  avif: (s) => s.avif({ quality: 62, effort: 4 }),
-  webp: (s) => s.webp({ quality: 84 }),
-  jpg: (s) => s.jpeg({ quality: 86, mozjpeg: true }),
+  avif: (s) => s.avif(SETTINGS.avif),
+  webp: (s) => s.webp(SETTINGS.webp),
+  jpg: (s) => s.jpeg(SETTINGS.jpg),
 };
+// Part of every cached file name, so changing a setting or the encoder
+// never reuses stale files.
+const RECIPE = crypto.createHash('sha1').update(JSON.stringify([SETTINGS, sharp.versions])).digest('hex').slice(0, 6);
 
 export function createImages({ root, outDir }) {
   const cacheDir = path.join(root, 'var', 'cache', 'img');
@@ -28,19 +32,22 @@ export function createImages({ root, outDir }) {
     if (done.has(key)) return done.get(key);
     const buf = fs.readFileSync(file);
     const hash = crypto.createHash('sha1').update(buf).digest('hex').slice(0, 10);
-    const meta = await sharp(buf).metadata();
+    const raw = await sharp(buf).metadata();
+    // A phone photo can be stored sideways with an orientation tag. Honour it.
+    const turned = (raw.orientation ?? 1) >= 5;
+    const meta = { ...raw, width: turned ? raw.height : raw.width, height: turned ? raw.width : raw.height };
     const name = path.basename(file, path.extname(file));
     const widths = [...new Set([...WIDTHS.filter((w) => w < meta.width), meta.width])];
     const variants = { avif: [], webp: [], jpg: [] };
     for (const [fmt, encode] of Object.entries(FORMATS)) {
       const list = fmt === 'jpg' ? [widths.filter((w) => w <= 1600).at(-1) ?? widths[0]] : widths;
       for (const w of list) {
-        const outName = `${name}-${hash}-${w}.${fmt}`;
+        const outName = `${name}-${hash}${RECIPE}-${w}.${fmt}`;
         const cached = path.join(cacheDir, outName);
         const rel = `img/${group}/${outName}`;
         variants[fmt].push({ w, path: '/' + rel });
         jobs.push(async () => {
-          if (!fs.existsSync(cached)) await encode(sharp(buf).resize({ width: w, withoutEnlargement: true })).toFile(cached);
+          if (!fs.existsSync(cached)) await encode(sharp(buf).rotate().resize({ width: w, withoutEnlargement: true })).toFile(cached);
           const dest = path.join(outDir, rel);
           fs.mkdirSync(path.dirname(dest), { recursive: true });
           fs.copyFileSync(cached, dest);
@@ -51,7 +58,10 @@ export function createImages({ root, outDir }) {
     jobs.push(async () => {
       const dest = path.join(outDir, fullRel);
       fs.mkdirSync(path.dirname(dest), { recursive: true });
-      fs.copyFileSync(file, dest);
+      // The full-size file is the source, byte for byte, unless it carries
+      // camera metadata (which can include a location). Then it is written
+      // again without the metadata, upright.
+      if (raw.exif || turned) await (raw.format === 'jpeg' ? sharp(buf).rotate().jpeg({ quality: 94 }) : sharp(buf).rotate()).toFile(dest); else fs.copyFileSync(file, dest);
     });
     const desc = { width: meta.width, height: meta.height, variants, full: '/' + fullRel };
     done.set(key, desc);

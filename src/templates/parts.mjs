@@ -59,7 +59,7 @@ export function artifact(ctx, { img, alt, caption }, { eager = false } = {}) {
 }
 
 export function list(tag, items, cls = '') {
-  return html`<${raw(tag)}${attrs({ class: cls || null })} style="--n:${items.length}">${items.map((it, i) => html`<li style="--i:${i + 1}">${it}</li>`)}</${raw(tag)}>`;
+  return html`<${raw(tag)}${attrs({ class: cls || null })} role="list" style="--n:${items.length}">${items.map((it, i) => html`<li style="--i:${i + 1}">${it}</li>`)}</${raw(tag)}>`;
 }
 
 export const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;

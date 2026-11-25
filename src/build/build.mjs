@@ -14,6 +14,7 @@ import { compileMood, readToken, moodHead, moodClientConfig } from './moods.mjs'
 import { createImages } from './images.mjs';
 import { moods } from '../moods/registry.mjs';
 import { raw } from './html.mjs';
+import { toHex } from './colour.mjs';
 import { homePage } from '../templates/home.mjs';
 import { entryPage } from '../templates/case.mjs';
 import { workPage, ledgerPage, facets, normalise } from '../templates/work.mjs';
@@ -25,7 +26,11 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const argv = process.argv.slice(2);
 const arg = (name) => { const i = argv.indexOf(name); return i === -1 ? null : (argv[i + 1] ?? true); };
 const outDir = path.resolve(root, arg('--out') && arg('--out') !== true ? arg('--out') : 'dist');
-const preview = Boolean(process.env.PREVIEW);
+// PREVIEW is "1" or "true" for a preview, unset or empty for production.
+// Anything else is refused, so PREVIEW=0 can never build a preview by mistake.
+const previewEnv = process.env.PREVIEW ?? '';
+if (!['', '1', 'true'].includes(previewEnv)) { console.error(`\nPREVIEW must be 1 (or true) for a preview build, or unset for production. Found "${previewEnv}".\n`); process.exit(1); }
+const preview = previewEnv !== '';
 const BASE = process.env.BASE ?? '/';
 const relative = BASE === 'relative';
 const skipImages = argv.includes('--no-images');
@@ -66,6 +71,11 @@ async function main() {
     process.exit(1);
   }
 
+  if (!preview && content.report.flags.length) {
+    console.error(`\nA production build needs every draft flag resolved. ${content.report.flags.length} remain:\n` + content.report.flags.map((f) => '  ' + f).join('\n') + '\nApprove the copy and remove the flag, or build a preview with PREVIEW=1.\n');
+    process.exit(1);
+  }
+
   fs.rmSync(outDir, { recursive: true, force: true });
   fs.mkdirSync(outDir, { recursive: true });
 
@@ -79,7 +89,9 @@ async function main() {
     if (only && !only.includes(mood.id)) { write(`moods/${mood.id}.css`, `/* ${mood.name}: not compiled in this build (MOOD_ONLY). */\n`); themeColors[mood.id] = mood.scheme === 'dark' ? '#000' : '#fff'; tokenDump[mood.id] = {}; continue; }
     const { css, flat } = compileMood(mood, { srcDir: path.join(root, 'src/moods') });
     write(`moods/${mood.id}.css`, css);
-    themeColors[mood.id] = readToken(flat, mood.themeToken) ?? (mood.scheme === 'dark' ? '#000' : '#fff');
+    const themeValue = readToken(flat, mood.themeToken);
+    try { themeColors[mood.id] = toHex(themeValue); }
+    catch { console.error(`\nsrc/moods/${mood.id}.css: the theme token ${mood.themeToken} must be a literal colour (oklch, hex or rgb), found "${themeValue}". It becomes <meta name="theme-color">.\n`); process.exit(1); }
     tokenDump[mood.id] = [...flat.matchAll(/(--[a-z0-9-]+)\s*:\s*([^;}]+)[;}]/g)].reduce((acc, m) => { if (!(m[1] in acc)) acc[m[1]] = m[2].trim(); return acc; }, {});
   }
 
@@ -94,8 +106,13 @@ async function main() {
   // ---- images ----
   const images = createImages({ root, outDir });
   const stub = { width: 1600, height: 900, variants: { avif: [{ w: 1600, path: '/img/stub.avif' }], webp: [{ w: 1600, path: '/img/stub.webp' }], jpg: [{ w: 1600, path: '/img/stub.jpg' }] }, full: '/img/stub.jpg' };
-  for (const e of content.entries) for (const p of e.plates) for (const img of p.images) img.asset = skipImages ? stub : await images.prepare(img.file, e.slug);
-  if (content.profile.portrait) content.profile.portrait.asset = skipImages ? stub : await images.prepare(content.profile.portrait.file, 'profile');
+  const prepare = async (file, group, where) => {
+    if (skipImages) return stub;
+    try { return await images.prepare(file, group); }
+    catch (e) { console.error(`\n${where}: "${path.basename(file)}" could not be read as an image (${e.message.split('\n')[0]}).\n`); process.exit(1); }
+  };
+  for (const e of content.entries) for (const p of e.plates) for (const img of p.images) img.asset = await prepare(img.file, e.slug, img.where);
+  if (content.profile.portrait) content.profile.portrait.asset = await prepare(content.profile.portrait.file, 'profile', 'content/profile/profile.yaml:1');
   await images.flush();
 
   // ---- pages ----
@@ -107,7 +124,7 @@ async function main() {
   for (const v of f.type) page(`/work/type/${v.key}/`, (ctx) => workPage(ctx, { active: { type: v.key }, docTitle: `${TYPES[v.key].plural}, Work` }));
   for (const v of f.org) page(`/work/org/${v.key}/`, (ctx) => workPage(ctx, { active: { org: v.key }, docTitle: `${v.label}, Work` }));
   for (const v of f.skill) page(`/work/skill/${v.key}/`, (ctx) => workPage(ctx, { active: { skill: v.key }, docTitle: `${v.label}, Work` }));
-  for (const c of content.collections) page(`/work/c/${c.slug}/`, (ctx) => workPage(ctx, { active: normalise(c.filter), heading: c.title, kicker: 'Collection', intro: raw(c.introHtml), collection: true }));
+  for (const c of content.collections) page(`/work/c/${c.slug}/`, (ctx) => workPage(ctx, { active: normalise(c.filter), heading: c.title, kicker: 'Collection', intro: c.introHtml, collection: true }));
   page('/work/ledger/', ledgerPage);
   for (const e of content.entries.filter((x) => x.hasPage)) page(`/work/${e.slug}/`, (ctx) => entryPage(ctx, e));
   page('/profile/', profilePage);
@@ -123,6 +140,12 @@ async function main() {
     const u = urlFor(p.path);
     const ctx = {
       content, u, page: p.path, preview,
+      // Finishes HTML rendered from Markdown: links to pages of this site go
+      // through the URL helper, and lists keep their list role when a mood
+      // removes their markers.
+      md: (h) => raw(String(h ?? '')
+        .replace(/href="(\/(?!\/)[^"]*)"/g, (m, href) => `href="${u(href)}"`)
+        .replace(/<(ul|ol)>/g, '<$1 role="list">')),
       moodHead: moodHead({ u, themeColors }),
       moodConfig: { ...moodClientConfig({ themeColors }), base: u('/moods/', { dir: true }) },
     };
@@ -132,7 +155,7 @@ async function main() {
 
   // ---- machine-readable index of public entries ----
   const index = {
-    site: content.site.url, name: content.site.name, generated: new Date().toISOString().slice(0, 10),
+    site: content.site.url, name: content.site.name,
     entries: content.entries.filter((e) => e.visibility === 'public').map((e) => ({
       title: e.title, type: e.type, year: e.year, date: e.date_label, organisation: e.organisation ?? null,
       role: e.role ?? null, skills: e.skills, status: e.status ?? null,

@@ -39,10 +39,10 @@ function filters(ctx, all, active, collection) {
   const f = facets(all);
   return html`<div class="c c-filters" data-c="filters" data-filters${raw(collection ? ' data-collection' : '')}>
 ${orn()}
-${head({ label: 'Filters', readout: null })}
-${AXES.map((ax, a) => html`<div class="filter" data-axis="${ax.key}" style="--i:${a + 1}"><p class="c-sublabel" id="filter-${ax.key}">${ax.label}</p><ul class="filter__list" aria-labelledby="filter-${ax.key}" style="--n:${f[ax.key].length + 1}">
+${head({ label: 'Filters', tag: 'h2' })}
+${AXES.map((ax, a) => html`<div class="filter" data-axis="${ax.key}" style="--i:${a + 1}"><p class="c-sublabel" id="filter-${ax.key}">${ax.label}</p><ul class="filter__list" role="list" aria-labelledby="filter-${ax.key}" style="--n:${f[ax.key].length + 1}">
 <li><a class="chip" href="${ctx.u('/work/')}" data-filter-value=""${attrs({ 'aria-current': active[ax.key] ? null : 'true' })}>All</a></li>
-${f[ax.key].map((v) => html`<li><a class="chip" href="${ctx.u(`/work/${ax.seg}/${v.key}/`)}" data-filter-value="${v.key}"${attrs({ 'aria-current': active[ax.key] === v.key ? 'true' : null })}>${v.label} <span class="chip__n">${v.n}</span></a></li>`)}
+${f[ax.key].map((v) => html`<li><a class="chip" href="${ctx.u(`/work/${ax.seg}/${v.key}/`)}" data-filter-value="${v.key}" data-filter-title="${ax.key === 'type' ? TYPES[v.key].plural : v.label}"${attrs({ 'aria-current': active[ax.key] === v.key ? 'true' : null })}>${v.label} <span class="chip__n">${v.n}</span></a></li>`)}
 </ul></div>`)}
 </div>`;
 }
@@ -51,7 +51,8 @@ function row(ctx, e, i, shown) {
   const name = e.hasPage ? html`<a class="row__link" href="${ctx.u(`/work/${e.slug}/`)}">${e.title}</a>` : html`<span class="row__link">${e.title}</span>`;
   return html`<tr class="row" style="--i:${i + 1}" data-type="${e.type}" data-org="${e.organisation ? slugify(e.organisation) : ''}" data-skills="${e.skills.map(slugify).join(' ')}"${attrs({ hidden: !shown })}>
 <td class="row__year" data-col="year">${e.year}</td>
-<th class="row__title" data-col="title" scope="row">${name}${e.summary ? html` <span class="row__summary">${e.summary}</span>` : ''}${e.confidentiality ? html` <span class="row__note">Visuals limited by confidentiality</span>` : ''}${e.draft_note ? html` ${draftTag()}` : ''}</th>
+<th class="row__title" data-col="title" scope="row">${name}</th>
+<td class="row__about" data-col="about">${e.summary ? html`<span class="row__summary">${e.summary}</span> ` : ''}${e.confidentiality ? html`<span class="row__note">Visuals limited by confidentiality</span> ` : ''}${e.draft_note ? draftTag() : ''}</td>
 <td class="row__org" data-col="org">${e.organisation ?? ''}</td>
 <td class="row__type" data-col="type"><span class="type-tag" data-type="${e.type}">${TYPES[e.type].label}</span></td>
 <td class="row__role" data-col="role">${e.role ?? ''}</td>
@@ -62,12 +63,12 @@ export function indexTable(ctx, all, active, { caption = 'Work, newest first' } 
   const shown = all.filter((e) => matches(e, active)).length;
   return html`<div class="c c-index" data-c="index">
 ${orn()}
-${head({ label: 'Index', readout: null })}
+${head({ label: 'Index', tag: 'h2' })}
 <p class="index__count" data-count aria-live="polite">${plural(shown, 'entry', 'entries')}</p>
-<div class="index__scroll"><table class="index"><caption class="index__caption">${caption}</caption>
-<thead><tr><th scope="col" data-col="year">Year</th><th scope="col" data-col="title">Title</th><th scope="col" data-col="org">Organisation</th><th scope="col" data-col="type">Type</th><th scope="col" data-col="role">Role</th></tr></thead>
+<table class="index"><caption class="index__caption">${caption}</caption>
+<thead><tr><th scope="col" data-col="year">Year</th><th scope="col" data-col="title">Title</th><th scope="col" data-col="about">About</th><th scope="col" data-col="org">Organisation</th><th scope="col" data-col="type">Type</th><th scope="col" data-col="role">Role</th></tr></thead>
 <tbody style="--n:${all.length}">${all.map((e, i) => row(ctx, e, i, matches(e, active)))}</tbody>
-</table></div>
+</table>
 <p class="index__empty" data-empty${attrs({ hidden: shown > 0 })}>Nothing matches these filters yet.</p>
 </div>`;
 }
@@ -78,7 +79,7 @@ function collectionList(ctx) {
   return html`<section class="c c-collections" data-c="collections">
 ${orn()}
 ${head({ label: 'Collections', tag: 'h2' })}
-<ul class="collections" style="--n:${collections.length + 1}">
+<ul class="collections" role="list" style="--n:${collections.length + 1}">
 ${collections.map((c, i) => {
     const n = entries.filter((e) => matches(e, normalise(c.filter))).length;
     return html`<li class="collection" style="--i:${i + 1}"><a href="${ctx.u(`/work/c/${c.slug}/`)}"><span class="collection__name">${c.title}</span> <span class="collection__n">${plural(n, 'entry', 'entries')}</span></a></li>`;
@@ -96,7 +97,7 @@ export function workPage(ctx, { active = {}, heading = 'Work', docTitle = null, 
 ${orn()}
 ${head({ label: kicker ?? 'Work' })}
 <h1 class="c-title">${title(heading)}</h1>
-${intro ? html`<div class="prose pagehead__intro">${intro}</div>` : ''}
+${intro ? html`<div class="prose pagehead__intro">${ctx.md(intro)}</div>` : ''}
 </section>
 ${filters(ctx, all, active, collection)}
 ${indexTable(ctx, all, active)}
@@ -119,8 +120,8 @@ ${head({ label: 'Work' })}
 </section>
 <div class="c c-ledger" data-c="ledger">
 ${orn()}
-${head({ label: 'Ledger', readout: plural(products.length, 'work', 'works') })}
-<div class="index__scroll"><table class="ledger"><caption class="index__caption">Products and systems, with status and date</caption>
+${head({ label: 'Ledger', tag: 'h2', readout: plural(products.length, 'work', 'works') })}
+<table class="ledger"><caption class="index__caption">Products and systems, with status and date</caption>
 <thead><tr><th scope="col" data-col="name">Name</th><th scope="col" data-col="status">Status</th><th scope="col" data-col="when">When</th><th scope="col" data-col="what">What it is</th></tr></thead>
 <tbody style="--n:${products.length}">${products.map((e, i) => html`<tr class="row" style="--i:${i + 1}" data-status="${e.status}">
 <th class="row__title" data-col="name" scope="row">${e.hasPage ? html`<a class="row__link" href="${ctx.u(`/work/${e.slug}/`)}">${e.title}</a>` : html`<span class="row__link">${e.title}</span>`}${e.draft_note ? html` ${draftTag()}` : ''}</th>
@@ -128,14 +129,14 @@ ${head({ label: 'Ledger', readout: plural(products.length, 'work', 'works') })}
 <td data-col="when">${e.date_label}</td>
 <td data-col="what">${e.summary ?? ''}${e.verdict ? html` <span class="verdict"><span class="verdict__label">Verdict</span> ${e.verdict}</span>` : ''}</td>
 </tr>`)}</tbody>
-</table></div>
-<div class="legend"><p class="c-sublabel" id="legend-label">Status key</p><ul class="legend__list" aria-labelledby="legend-label" style="--n:${used.length}">${used.map((s, i) => html`<li style="--i:${i + 1}"><span class="status" data-status="${s}">${STATUSES[s]}</span></li>`)}</ul></div>
+</table>
+<div class="legend"><p class="c-sublabel" id="legend-label">Status key</p><ul class="legend__list" role="list" aria-labelledby="legend-label" style="--n:${used.length}">${used.map((s, i) => html`<li style="--i:${i + 1}"><span class="status" data-status="${s}">${STATUSES[s]}</span></li>`)}</ul></div>
 </div>
 <section class="c c-nnl" data-c="nnl">
 ${orn()}
 ${head({ label: 'Now, next, later', tag: 'h2', readout: `Updated ${nnl.updated}`, draft: nnl.draft })}
 <div class="nnl" style="--n:3">
-${[['Now', nnl.now], ['Next', nnl.next], ['Later', nnl.later]].map(([label, items], i) => html`<section class="nnl__col" data-when="${label.toLowerCase()}" style="--i:${i + 1}"><h3 class="c-sublabel">${label}</h3><ul class="points">${items.map((t) => html`<li>${t}</li>`)}</ul></section>`)}
+${[['Now', nnl.now], ['Next', nnl.next], ['Later', nnl.later]].map(([label, items], i) => html`<section class="nnl__col" data-when="${label.toLowerCase()}" style="--i:${i + 1}"><h3 class="c-sublabel">${label}</h3><ul class="points" role="list">${items.map((t) => html`<li>${t}</li>`)}</ul></section>`)}
 </div>
 </section>`;
   return shell(ctx, { title: 'Works ledger', page: 'ledger', section: 'work', body, description: 'Products and systems with stage and verdict, and what is now, next and later.' });

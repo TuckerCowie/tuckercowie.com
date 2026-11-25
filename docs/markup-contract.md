@@ -43,8 +43,10 @@ what they say. The whole sheet is wrapped in `@media screen`; print is
 handled once in `src/styles/base.css`.
 
 Not allowed in a mood: `@font-face` (faces are declared in
-`src/build/fonts.mjs`), `!important`, and keyframe names that do not start
-with the mood id (`@keyframes cyber-sweep`).
+`src/build/fonts.mjs`), `@layer` and `@scope` (a layered rule would lose to
+`base.css`, and the build already scopes the sheet), `!important`, and
+keyframe names that do not start with the mood id (`@keyframes cyber-sweep`).
+Write the root as `:root` or `html`, never inside `:is()` or `:where()`.
 
 Available faces: `"Newsreader"` (variable, weight 200 to 800, optical size,
 roman and italic), `"IBM Plex Sans"` (400, 400 italic, 500, 600, 600 italic),
@@ -70,6 +72,9 @@ Every component root is `.c` with a `data-c` name. Inside, in source order:
 | `.c-head` | The head: `.c-label` (real text, sometimes a heading) and an optional `.c-readout` of real data, and sometimes a `.draft` tag |
 | `.c-title` | The title. Display titles are split into `.t-lead` and `.t-tail` (the last word) so a mood can colour the tail |
 | `.c-sublabel` | A label inside a component |
+
+Every `ul` and `ol` outside a `nav` carries `role="list"`, so a mood can
+remove list markers without the list vanishing for screen-reader users.
 
 A `.c` root, its `::before` and `::after`, `.c-orn` and its two
 pseudo-elements, and `.c-head` with its two, give a mood six paint layers
@@ -159,7 +164,7 @@ article.entry[data-type][data-written?]
   div.plates[--n]
     section.c.c-plate[data-c=plate][data-kind=process|solution|in-action][--i][--n][data-written?][data-set?]
       span.c-orn
-      div.c-head > p.c-label "Plate"
+      div.c-head > p.c-label "Plate" (> span.vh " 3 of 9", read out, never shown)
       h2.c-title.plate__title
       div.prose.plate__text?                 two or three sentences, may hold a list
       div.plate__figures[--n]? > figure.artifact[data-shape=wide|strip|tall][--w][--h] x1 (several for solution and in-action)
@@ -186,24 +191,35 @@ article.entry[data-type][data-written?]
 ```
 section.c.c-pagehead[data-c=pagehead] > span.c-orn + div.c-head > p.c-label ; h1.c-title ; div.prose.pagehead__intro?
 div.c.c-filters[data-c=filters]
+  div.c-head > h2.c-label "Filters"
   div.filter[data-axis=type|org|skill][--i] > p.c-sublabel + ul.filter__list > li > a.chip[aria-current?] (> span.chip__n)
 div.c.c-index[data-c=index]
+  div.c-head > h2.c-label "Index"
   p.index__count
-  div.index__scroll > table.index > caption.index__caption + thead + tbody[--n]
-    tr.row[--i][data-type][hidden?] > td.row__year[data-col=year] + th.row__title[data-col=title] (a.row__link, span.row__summary?, span.row__note?, span.draft?) + td.row__org + td.row__type > span.type-tag[data-type] + td.row__role
+  table.index > caption.index__caption + thead + tbody[--n]
+    tr.row[--i][data-type][hidden?]
+      td.row__year[data-col=year]
+      th.row__title[data-col=title] > a.row__link or span.row__link        the title only
+      td.row__about[data-col=about] > span.row__summary?, span.row__note?, span.draft?   may be empty
+      td.row__org[data-col=org]
+      td.row__type[data-col=type] > span.type-tag[data-type]
+      td.row__role[data-col=role]
   p.index__empty[hidden]
 section.c.c-collections[data-c=collections] > div.c-head > h2.c-label ; ul.collections > li.collection > a > span.collection__name + span.collection__n
 ```
 
-The index stays a table in every mood. At narrow widths restyle the rows
-(`display: grid` on `tr` is fine) but keep every cell visible.
+The index stays a table in every mood, with six columns: Year, Title,
+About, Organisation, Type, Role. The tables never scroll sideways. At narrow
+widths restyle the rows (`display: grid` on `tr` is fine, and the About cell
+can sit under the title) but keep every cell that has text visible.
 
 ## Works ledger (`data-page=ledger`)
 
 ```
 section.c.c-pagehead
 div.c.c-ledger[data-c=ledger]
-  div.index__scroll > table.ledger > caption + thead + tbody > tr.row[data-status] > th.row__title + td[data-col=status] > span.status[data-status] + td[data-col=when] + td[data-col=what] (> span.verdict > span.verdict__label)
+  div.c-head > h2.c-label "Ledger" + p.c-readout
+  table.ledger > caption + thead + tbody > tr.row[data-status] > th.row__title + td[data-col=status] > span.status[data-status] + td[data-col=when] + td[data-col=what] (> span.verdict > span.verdict__label)
   div.legend > p.c-sublabel + ul.legend__list > li > span.status[data-status]
 section.c.c-nnl[data-c=nnl] > div.c-head > h2.c-label + p.c-readout ; div.nnl > section.nnl__col[data-when=now|next|later] > h3.c-sublabel + ul.points
 ```

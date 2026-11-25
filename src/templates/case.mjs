@@ -29,7 +29,7 @@ ${head({ label: 'Summary', readout: plates ? plural(plates, 'plate', 'plates') :
 <${raw(level)} class="c-title summary__title">${title(e.title)}</${raw(level)}>
 ${e.summary ? html`<p class="summary__line">${e.summary}</p>` : ''}
 <dl class="fields" style="--n:${fields.length}">${fields.map((f, i) => html`<div class="field" data-field="${f.key}" style="--i:${i + 1}"><dt>${f.label}</dt><dd>${f.status ? html`<span class="status" data-status="${f.status}">${f.value}</span>` : f.href ? html`<a href="${ctx.u(f.href)}">${f.value}</a>` : f.value}</dd></div>`)}</dl>
-${e.skills.length ? html`<div class="skills"><p class="c-sublabel">Skills</p><ul class="tags" style="--n:${e.skills.length}">${e.skills.map((s, i) => html`<li style="--i:${i + 1}"><a class="tag" href="${ctx.u(`/work/skill/${slugify(s)}/`)}">${s}</a></li>`)}</ul></div>` : ''}
+${e.skills.length ? html`<div class="skills"><p class="c-sublabel">Skills</p><ul class="tags" role="list" style="--n:${e.skills.length}">${e.skills.map((s, i) => html`<li style="--i:${i + 1}"><a class="tag" href="${ctx.u(`/work/skill/${slugify(s)}/`)}">${s}</a></li>`)}</ul></div>` : ''}
 ${e.confidentiality ? html`<p class="marker" data-marker="confidential"><span class="marker__label">Confidentiality</span> <span class="marker__text">${e.confidentiality}</span></p>` : ''}
 </header>`;
 }
@@ -45,25 +45,27 @@ export function detailsBlock(ctx, e) {
   return html`<section class="c c-details" data-c="details" style="--n:${blocks.length}">
 ${orn()}
 ${head({ label: e.details_label, tag: 'h2' })}
-${e.introHtml.trim() ? html`<div class="prose details__intro">${raw(e.introHtml)}</div>` : ''}
+${e.introHtml.trim() ? html`<div class="prose details__intro">${ctx.md(e.introHtml)}</div>` : ''}
 ${blocks.map((b, i) => html`<section class="block" data-block="${b.key}" style="--i:${i + 1}"><h3 class="c-sublabel">${b.label}</h3>${b.body}</section>`)}
 </section>`;
 }
 
-const KIND_LABEL = { process: 'Plate', solution: 'Solution', 'in-action': 'In action' };
+export const linkList = (ctx, links) => html`<ul class="links" role="list" style="--n:${links.length}">${links.map((l, k) => html`<li style="--i:${k + 1}"><a class="link" href="${ctx.u(l.href)}" rel="noopener">${l.label}</a></li>`)}</ul>`;
 
 export function plate(ctx, e, p, i, n, { written = false } = {}) {
   const images = written ? [] : p.images;
+  // Links sit on the Solution plate. With no Solution plate they follow the last plate.
   const links = p.kind === 'solution' ? e.links : [];
+  // The position is read out once. Moods draw it with counters, which are silent.
   return html`<section class="c c-plate" data-c="plate" data-kind="${p.kind}" id="plate-${i + 1}" style="--i:${i + 1};--n:${n}"${raw(images.length ? '' : ' data-written')}${raw(images.length > 1 ? ` data-set="${images.length}"` : '')}>
 ${orn()}
-${head({ label: 'Plate' })}
+${head({ label: html`Plate<span class="vh"> ${i + 1} of ${n}</span>` })}
 <h2 class="c-title plate__title">${p.title}</h2>
-${p.html.trim() ? html`<div class="prose plate__text">${raw(p.html)}</div>` : ''}
+${p.html.trim() ? html`<div class="prose plate__text">${ctx.md(p.html)}</div>` : ''}
 ${images.length ? html`<div class="plate__figures" style="--n:${images.length}">${images.map((img, k) => artifact(ctx, { img: img.asset, alt: img.alt, caption: img.caption }, { eager: i === 0 && k === 0 }))}</div>` : ''}
-${p.quote ? html`<blockquote class="pullquote">${raw(p.quote)}</blockquote>` : ''}
-${p.insight ? html`<aside class="c c-insight" data-c="insight">${orn()}${head({ label: 'Insight' })}<div class="insight__text">${raw(p.insight)}</div></aside>` : ''}
-${links.length ? html`<ul class="links" style="--n:${links.length}">${links.map((l, k) => html`<li style="--i:${k + 1}"><a class="link" href="${l.href}" rel="noopener">${l.label}</a></li>`)}</ul>` : ''}
+${p.quote ? html`<blockquote class="pullquote">${ctx.md(p.quote)}</blockquote>` : ''}
+${p.insight ? html`<aside class="c c-insight" data-c="insight">${orn()}${head({ label: 'Insight' })}<div class="insight__text">${ctx.md(p.insight)}</div></aside>` : ''}
+${links.length ? linkList(ctx, links) : ''}
 </section>`;
 }
 
@@ -88,7 +90,7 @@ export function entryBody(ctx, e, { written = false, level = 'h1', withPager = t
 ${summaryPlate(ctx, e, { level })}
 ${detailsBlock(ctx, e)}
 ${n ? html`<div class="plates" style="--n:${n}">${e.plates.map((p, i) => plate(ctx, e, p, i, n, { written }))}</div>` : ''}
-${!n && e.links.length ? html`<ul class="links" style="--n:${e.links.length}">${e.links.map((l, k) => html`<li style="--i:${k + 1}"><a class="link" href="${l.href}" rel="noopener">${l.label}</a></li>`)}</ul>` : ''}
+${e.links.length && !e.plates.some((p) => p.kind === 'solution') ? linkList(ctx, e.links) : ''}
 ${withPager ? pager(ctx, e) : ''}
 </article>`;
 }

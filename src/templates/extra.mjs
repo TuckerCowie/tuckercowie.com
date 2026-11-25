@@ -17,18 +17,18 @@ ${orn()}
 ${head({ label: 'Resume' })}
 <h1 class="c-title">${title(site.name)}</h1>
 <p class="resume__identity">${site.identity.map((l) => html`<span class="id-line">${l}</span> `)}</p>
-<p class="resume__contact">${emailLink(ctx, 'resume__email')} <span class="resume__url">${site.url.replace(/^https:\/\//, '')}</span></p>
+<p class="resume__contact">${emailLink(ctx, 'resume__email', { showAddress: true })} <span class="resume__url">${site.url.replace(/^https:\/\//, '')}</span></p>
 <p class="resume__lead">${site.lead} ${site.sub}</p>
 </header>
 <section class="c c-career" data-c="career">
 ${orn()}
 ${head({ label: 'Experience', tag: 'h2' })}
-<ol class="career" style="--n:${profile.career.length}">${profile.career.map((r, i) => html`<li class="career__row" style="--i:${i + 1}"><span class="career__when">${r.from ? `${r.from} to ${r.to ?? 'now'}` : 'Now'}${r.draft ? html` ${draftTag()}` : ''}</span> <span class="career__role">${r.role}</span> <span class="career__org">${r.organisation}</span>${r.note ? html` <span class="career__note">${r.note}</span>` : ''}</li>`)}</ol>
+<ol class="career" role="list" style="--n:${profile.career.length}">${profile.career.map((r, i) => html`<li class="career__row" style="--i:${i + 1}"><span class="career__when">${r.from ? `${r.from} to ${r.to ?? 'now'}` : 'Now'}${r.draft ? html` ${draftTag()}` : ''}</span> <span class="career__role">${r.role}</span> <span class="career__org">${r.organisation}</span>${r.note ? html` <span class="career__note">${r.note}</span>` : ''}</li>`)}</ol>
 </section>
 ${work.length ? html`<section class="c c-resumework" data-c="resumework">
 ${orn()}
 ${head({ label: 'Selected work', tag: 'h2' })}
-<ul class="resume__work" style="--n:${work.length}">${work.map((e, i) => html`<li style="--i:${i + 1}"><span class="career__when">${e.date_label}</span> <span class="career__role">${e.hasPage ? html`<a href="${ctx.u(`/work/${e.slug}/`)}">${e.title}</a>` : e.title}</span> <span class="career__org">${[TYPES[e.type].label, e.organisation].filter(Boolean).join(', ')}</span></li>`)}</ul>
+<ul class="resume__work" role="list" style="--n:${work.length}">${work.map((e, i) => html`<li style="--i:${i + 1}"><span class="career__when">${e.date_label}</span> <span class="career__role">${e.hasPage ? html`<a href="${ctx.u(`/work/${e.slug}/`)}">${e.title}</a>` : e.title}</span> <span class="career__org">${[TYPES[e.type].label, e.organisation].filter(Boolean).join(', ')}</span></li>`)}</ul>
 </section>` : ''}
 <section class="c c-education" data-c="education">
 ${orn()}
@@ -58,7 +58,7 @@ ${moods.map((m) => {
     return html`<section class="c c-tokens" data-c="tokens" data-specimen-mood="${m.id}">
 ${orn()}
 ${head({ label: 'Tokens', tag: 'h2', readout: `${m.name}. ${m.stands}.` })}
-<ul class="swatches" style="--n:${colours.length}">${colours.map(([k, v]) => html`<li class="swatch"><span class="swatch__chip" style="background:${v}"></span> <code class="swatch__name">${k}</code> <code class="swatch__value">${v}</code></li>`)}</ul>
+<ul class="swatches" role="list" style="--n:${colours.length}">${colours.map(([k, v]) => html`<li class="swatch"><span class="swatch__chip" style="background:${v}"></span> <code class="swatch__name">${k}</code> <code class="swatch__value">${v}</code></li>`)}</ul>
 <dl class="tokenlist">${rest.map(([k, v]) => html`<div><dt><code>${k}</code></dt><dd><code>${v}</code></dd></div>`)}</dl>
 </section>`;
   })}
@@ -74,7 +74,7 @@ ${head({ label: 'Type', tag: 'h2' })}
 <div class="type__row"><p class="c-sublabel">Text</p><div class="prose"><p>${site.sub} <strong>Strong text.</strong> <em>Emphasis.</em> <a href="${ctx.u('/work/')}">A link</a>.</p></div></div>
 <div class="type__row"><p class="c-sublabel">Label</p><p class="c-label">Plate</p></div>
 <div class="type__row"><p class="c-sublabel">Caption</p><p class="artifact__caption"><span class="fig-label">Figure</span> <span class="fig-text">A caption under an artifact.</span></p></div>
-<div class="type__row"><p class="c-sublabel">Status</p><ul class="legend__list">${Object.entries(STATUSES).map(([k, v]) => html`<li><span class="status" data-status="${k}">${v}</span></li>`)}</ul></div>
+<div class="type__row"><p class="c-sublabel">Status</p><ul class="legend__list" role="list">${Object.entries(STATUSES).map(([k, v]) => html`<li><span class="status" data-status="${k}">${v}</span></li>`)}</ul></div>
 <div class="type__row"><p class="c-sublabel">Tags</p><p>${draftTag()} <span class="type-tag" data-type="case-study">Case study</span> <a class="chip" href="${ctx.u('/work/')}" aria-current="true">All</a> <a class="chip" href="${ctx.u('/work/')}">Talk <span class="chip__n">1</span></a> <a class="tag" href="${ctx.u('/work/')}">Service Design</a></p></div>
 </div>
 </section>

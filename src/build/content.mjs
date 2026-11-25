@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parseDocument } from 'yaml';
 import { z } from 'zod';
-import { parseBody, renderMarkdown, ContentError } from './markdown.mjs';
+import { parseBody, renderMarkdown, checkProse, ContentError } from './markdown.mjs';
 import { slugify } from './html.mjs';
 
 export const TYPES = {
@@ -25,7 +25,7 @@ export const STATUSES = {
 const text = z.string().trim().min(1);
 const noEmDash = (s) => !/[\u2014\u2013]/.test(s);
 
-const link = z.strictObject({ label: text, href: z.string().regex(/^(https:\/\/|\/)/, 'A link must start with https:// or /') });
+const link = z.strictObject({ label: text, href: z.string().regex(/^(https:\/\/|\/(?!\/))/, 'A link must start with https:// or with one / for a page of this site.') });
 
 const entrySchema = z.strictObject({
   title: text,
@@ -125,8 +125,10 @@ function validateYaml(yamlSource, schema, file, startLine, errors) {
   const lineCounter = (pos) => { let i = offsets.findLastIndex((x) => x <= pos); return i + startLine; };
   for (const e of doc.errors) errors.push(new ContentError(file, lineCounter(e.pos?.[0] ?? 0), `YAML: ${e.message.split('\n')[0]}`));
   if (doc.errors.length) return null;
-  const data = doc.toJS() ?? {};
-  const res = schema.safeParse(data);
+  let data;
+  try { data = doc.toJS() ?? {}; }
+  catch (e) { errors.push(new ContentError(file, startLine, `YAML: ${e.message.split('\n')[0]} Put quotes around a value that starts with "*" or "&".`)); return null; }
+  const res = schema.safeParse(data, { reportInput: true });
   if (res.success) {
     // no em or en dashes anywhere in content
     const walk = (v, p) => {
@@ -151,7 +153,8 @@ function validateYaml(yamlSource, schema, file, startLine, errors) {
     }
     if (issue.code === 'invalid_value' && issue.values) msg = `"${where}" must be one of: ${issue.values.join(', ')}.`;
     else if (issue.code === 'invalid_type' && issue.input === undefined) msg = `Missing required field "${where}".`;
-    else if (issue.code === 'invalid_type') msg = `"${where}" must be ${issue.expected}.`;
+    else if (issue.code === 'invalid_type' && !where) msg = `The file must be a set of fields, such as "title: ...".`;
+    else if (issue.code === 'invalid_type') msg = `"${where}" must be ${/^[aeiou]/.test(issue.expected) ? 'an' : 'a'} ${issue.expected}${issue.expected === 'string' && typeof issue.input === 'number' ? '. Put it in quotes' : ''}.`;
     else msg = where ? `"${where}": ${issue.message}` : issue.message;
     errors.push(new ContentError(file, lineOf(doc, lineCounter, issue.path), msg));
   }
@@ -189,10 +192,11 @@ function loadEntry(file, root, errors) {
   const isIndex = path.basename(file) === 'index.md';
   const slug = isIndex ? path.basename(dir) : path.basename(file, '.md');
   for (const p of body.plates) for (const img of p.images) {
-    if (!img.src || /^[a-z]+:/i.test(img.src) || img.src.startsWith('/')) { errors.push(new ContentError(shown, fm.bodyLine + img.line + 1, `Image "${img.src}" must be a file beside the entry, written as ./name.jpg.`)); continue; }
+    if (!img.src || !/^(\.\/)?[^/\\]+\.(jpe?g|png|webp|avif)$/i.test(img.src)) { errors.push(new ContentError(shown, fm.bodyLine + img.line + 1, `Image "${img.src}" must be a JPEG, PNG, WebP or AVIF file beside the entry, written as ./name.jpg.`)); continue; }
     if (!isIndex) { errors.push(new ContentError(shown, fm.bodyLine + img.line + 1, 'An entry with images must live in its own folder as content/work/<slug>/index.md.')); continue; }
     img.file = path.join(dir, img.src);
-    if (!fs.existsSync(img.file)) errors.push(new ContentError(shown, fm.bodyLine + img.line + 1, `Image file not found: ${rel(root, img.file)}.`));
+    if (!fs.existsSync(img.file) || !fs.statSync(img.file).isFile()) errors.push(new ContentError(shown, fm.bodyLine + img.line + 1, `Image file not found: ${rel(root, img.file)}.`));
+    img.where = `${shown}:${fm.bodyLine + img.line + 1}`;
   }
   if (data.type === 'product' && !data.status) errors.push(new ContentError(shown, 2, `A product needs a "status": one of ${Object.keys(STATUSES).join(', ')}.`));
   if (slug !== slugify(slug)) errors.push(new ContentError(shown, 1, `The file or folder name "${slug}" must be lowercase letters, digits and hyphens.`));
@@ -200,7 +204,7 @@ function loadEntry(file, root, errors) {
     ...data, slug, file: shown,
     date_label: data.date_label ?? String(data.year),
     introHtml: body.introHtml, plates: body.plates,
-    hasPage: hasPlates || body.introHtml.trim() !== '',
+    hasPage: hasPlates || body.introHtml.trim() !== '' || data.links.length > 0,
     written: hasPlates && body.plates.length > 0 && body.plates.every((p) => p.images.length === 0),
   };
 }
@@ -221,21 +225,23 @@ function loadMarkdownFile(file, schema, root, errors) {
     const i = fm.body.split('\n').findIndex((l) => /[\u2014\u2013]/.test(l));
     errors.push(new ContentError(shown, fm.bodyLine + i + 1, 'The body contains an em or en dash. Use a comma, a colon or "to".'));
   }
-  return data ? { ...data, body: fm.body, bodyLine: fm.bodyLine } : null;
+  return data ? { ...data, body: fm.body, bodyLine: fm.bodyLine, shown } : null;
 }
 
-// Splits rendered Markdown into sections at each h2.
-export function sections(bodyMarkdown) {
+// Splits a Markdown body into sections at each "## ". A first paragraph that
+// is one emphasis ("*A subtitle.*") becomes the section's lede.
+export function sections(bodyMarkdown, { file = 'content', lineOffset = 0, errors = [] } = {}) {
+  errors.push(...checkProse(bodyMarkdown, { file, lineOffset, headings: 'h2-first' }));
   const htmlStr = renderMarkdown(bodyMarkdown);
   const parts = htmlStr.split(/(?=<h2>)/).map((s) => s.trim()).filter(Boolean);
   return parts.map((p) => {
     const m = p.match(/^<h2>([\s\S]*?)<\/h2>\s*([\s\S]*)$/);
     if (!m) return { title: null, html: p };
     let rest = m[2], lede = null;
-    const l = rest.match(/^<p><em>([\s\S]*?)<\/em><\/p>\s*([\s\S]*)$/);
+    const l = rest.match(/^<p><em>((?:(?!<\/?em>|<\/p>)[\s\S])*)<\/em><\/p>\s*([\s\S]*)$/);
     if (l) { lede = l[1]; rest = l[2]; }
     return { title: m[1], lede, html: rest };
-  });
+  }).filter((x) => x.title !== null);
 }
 
 // Fails on two spellings of what is probably the same organisation or skill.
@@ -247,7 +253,7 @@ function nearDuplicates(entries, field, errors) {
       const key = slugify(v);
       for (const [k, first] of seen) {
         if (first.value === v) continue;
-        if (k === key || (key.length > 5 && distance(k, key) <= 1)) {
+        if (k === key || (key.length > 5 && k.length !== key.length && distance(k, key) <= 1)) {
           errors.push(new ContentError(e.file, 2, `${field === 'skills' ? 'Skill' : 'Organisation'} "${v}" looks like "${first.value}" in ${first.file}. Use one spelling.`));
         }
       }
@@ -291,7 +297,10 @@ export function loadContent(root, { preview = false, extraEntryDirs = [] } = {})
   if (fs.existsSync(cdir)) for (const name of fs.readdirSync(cdir).sort()) {
     if (!name.endsWith('.md')) continue;
     const c = loadMarkdownFile(path.join(cdir, name), collectionSchema, root, errors);
-    if (c) collections.push({ ...c, slug: path.basename(name, '.md'), introHtml: renderMarkdown(c.body), file: rel(root, path.join(cdir, name)) });
+    if (c) {
+      errors.push(...checkProse(c.body, { file: c.shown, lineOffset: c.bodyLine, headings: 'none' }));
+      collections.push({ ...c, slug: path.basename(name, '.md'), introHtml: renderMarkdown(c.body), file: rel(root, path.join(cdir, name)) });
+    }
   }
 
   if (profile?.portrait) {
@@ -299,21 +308,34 @@ export function loadContent(root, { preview = false, extraEntryDirs = [] } = {})
     if (!fs.existsSync(profile.portrait.file)) errors.push(new ContentError('content/profile/profile.yaml', 1, `Portrait file not found: content/profile/${profile.portrait.src}.`));
   }
 
+  const manualSections = manual ? sections(manual.body, { file: manual.shown, lineOffset: manual.bodyLine, errors }) : [];
+  const systemsSections = systems ? sections(systems.body, { file: systems.shown, lineOffset: systems.bodyLine, errors }) : [];
+
   if (errors.length) {
     const e = new Error(`Content is not valid. ${errors.length} problem${errors.length === 1 ? '' : 's'}:\n` + errors.map((x) => '  ' + x.message).join('\n'));
     e.contentErrors = errors;
     throw e;
   }
 
+  // Everything still flagged as waiting on Tucker. A production build refuses
+  // to run while any remain: approving copy means removing the flag.
+  const flags = [];
+  for (const k of site.drafts) flags.push(`content/site.yaml: "${k}" is listed under drafts`);
+  for (const s of profile.statements) if (s.draft) flags.push(`content/profile/profile.yaml: the statement "${s.label}" has draft: true`);
+  for (const r of profile.career) if (r.draft) flags.push(`content/profile/profile.yaml: the career row "${r.role}, ${r.organisation}" has draft: true`);
+  if (nnl.draft) flags.push('content/now-next-later.yaml: draft: true');
+  for (const e of entries) if (e.visibility === 'public' && e.draft_note) flags.push(`${e.file}: a public entry still has a draft_note ("${e.draft_note}")`);
+
   const total = entries.length;
   const drafts = entries.filter((e) => e.visibility !== 'public');
   if (!preview) entries = entries.filter((e) => e.visibility === 'public');
   entries.sort((a, b) => b.year - a.year || b.order - a.order || a.title.localeCompare(b.title));
+  if (!preview) profile.assessments = profile.assessments.filter((a) => a.line);
   const visibleCollections = (preview ? collections : collections.filter((c) => c.visibility === 'public')).sort((a, b) => a.order - b.order);
 
   return {
-    site, profile, manual: { ...manual, sections: sections(manual.body) }, systems: { ...systems, sections: sections(systems.body) },
+    site, profile, manual: { ...manual, sections: manualSections }, systems: { ...systems, sections: systemsSections },
     nnl, entries, collections: visibleCollections, preview,
-    report: { total, built: entries.length, drafts: drafts.map((d) => d.file) },
+    report: { total, built: entries.length, drafts: drafts.map((d) => d.file), flags },
   };
 }

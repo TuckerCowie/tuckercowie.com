@@ -100,16 +100,58 @@ test('no em or en dash in content or in the built pages', () => {
   assert.deepEqual(found, []);
 });
 
-test('a production build leaves out drafts and refuses to ship without an email', () => {
-  let failed = false, message = '';
-  try { execFileSync('node', ['src/build/build.mjs', '--out', path.join(root, 'var/check-static-prod')], { cwd: root, env: { ...process.env, PREVIEW: '' }, stdio: 'pipe' }); }
-  catch (e) { failed = true; message = String(e.stderr); }
+const run = (env, outName) => {
+  try { execFileSync('node', ['src/build/build.mjs', '--out', path.join(root, 'var', outName)], { cwd: root, env: { ...process.env, ...env }, stdio: 'pipe' }); return { ok: true, message: '' }; }
+  catch (e) { return { ok: false, message: String(e.stderr) }; }
+};
+
+test('a production build refuses to ship without an email or with draft flags left', () => {
   const site = fs.readFileSync(path.join(root, 'content/site.yaml'), 'utf8');
+  const res = run({ PREVIEW: '' }, 'check-static-prod');
   if (/^email:\s*null/m.test(site)) {
-    assert.ok(failed, 'a production build with no email must fail');
-    assert.match(message, /content\/site\.yaml:1: "email" is not set/);
+    assert.ok(!res.ok, 'a production build with no email must fail');
+    assert.match(res.message, /content\/site\.yaml:1: "email" is not set/);
+  } else if (!res.ok) {
+    assert.match(res.message, /A production build needs every draft flag resolved/);
   } else {
-    assert.ok(!failed, message);
-    for (const file of htmlFiles(path.join(root, 'var/check-static-prod'))) assert.ok(!/class="draft"/.test(fs.readFileSync(file, 'utf8')), `${rel(file)} shows a draft tag in production`);
+    for (const file of htmlFiles(path.join(root, 'var/check-static-prod'))) {
+      const text = fs.readFileSync(file, 'utf8');
+      assert.ok(!/class="draft"/.test(text), `${rel(file)} shows a draft tag in production`);
+      assert.ok(!/class="pending"/.test(text), `${rel(file)} shows a placeholder in production`);
+    }
   }
+});
+
+test('PREVIEW=0 and PREVIEW=false never build a preview', () => {
+  for (const v of ['0', 'false', 'no']) {
+    const res = run({ PREVIEW: v }, 'check-static-prod');
+    assert.ok(!res.ok, `PREVIEW=${v} must not build`);
+    assert.match(res.message, /PREVIEW must be 1/);
+  }
+});
+
+test('a mood may not use @layer or @scope', async () => {
+  const { compileMood } = await import('../../src/build/moods.mjs');
+  const dir = path.join(root, 'var/check-static-moods');
+  fs.mkdirSync(dir, { recursive: true });
+  for (const [name, css, re] of [['layered', '@layer chrome { h1 { margin: 0 } }', /@layer is not allowed/], ['scoped', '@scope (.card) { img { border: 0 } }', /@scope is not allowed/]]) {
+    fs.writeFileSync(path.join(dir, `${name}.css`), css);
+    assert.throws(() => compileMood({ id: name, name, scheme: 'light', auto: null }, { srcDir: dir }), re);
+  }
+});
+
+test('view-transition pseudo-elements stay on the root when a mood is scoped', async () => {
+  const { compileMood } = await import('../../src/build/moods.mjs');
+  const dir = path.join(root, 'var/check-static-moods');
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'vt.css'), '::view-transition-group(root) { animation-duration: 1s }');
+  const { css } = compileMood({ id: 'vt', name: 'vt', scheme: 'light', auto: null }, { srcDir: dir });
+  assert.match(css, /:root\[data-mood=vt\]::view-transition-group\(root\)/);
+});
+
+test('the same input builds the same output', () => {
+  const read = (dir) => Object.fromEntries(walk(dir).filter((f) => /\.(html|json|css|js)$/.test(f)).map((f) => [path.relative(dir, f), fs.readFileSync(f, 'utf8')]));
+  const again = path.join(root, 'var/check-static-again');
+  execFileSync('node', ['src/build/build.mjs', '--out', again], { cwd: root, env: { ...process.env, PREVIEW: '1' }, stdio: 'pipe' });
+  assert.deepEqual(read(again), read(out));
 });

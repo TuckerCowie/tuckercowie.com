@@ -11,13 +11,14 @@ const NAV = [
   { id: 'systems', label: 'Systems', path: '/systems/' },
 ];
 
-export function emailLink(ctx, cls = 'email') {
+export function emailLink(ctx, cls = 'email', { showAddress = false } = {}) {
   const { site } = ctx.content;
   const draft = !site.email;
   // No address is committed to this public repo. Until one is set in
   // content/site.yaml the link has no destination and is tagged as a draft.
   if (draft) return html`<a class="${cls}" aria-disabled="true" role="link">${site.email_label}</a> ${draftTag()}`;
-  return html`<a class="${cls}" href="mailto:${site.email}">${site.email_label}</a>`;
+  // On the printed resume the address itself is the text, since paper has no links.
+  return html`<a class="${cls}" href="mailto:${site.email}">${showAddress ? site.email : site.email_label}</a>`;
 }
 
 export function shell(ctx, { title, description, page, section = null, body, noindex = false }) {

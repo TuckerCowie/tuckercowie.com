@@ -43,6 +43,17 @@
     });
   }
 
+  // Keeps the document title in step with the address, as the prerendered
+  // page at that address would have it: "Talks, Work · Name".
+  var baseTitle = document.title.replace(/^.*?(?=Work \u00b7 )/, '');
+  function retitle() {
+    var names = axes.filter(function (ax) { return state[ax]; }).map(function (ax) {
+      var chip = box.querySelector('[data-axis="' + ax + '"] [data-filter-value="' + state[ax] + '"]');
+      return chip ? chip.getAttribute('data-filter-title') : state[ax];
+    });
+    document.title = (names.length ? names.join(', ') + ', ' : '') + baseTitle;
+  }
+
   function url() {
     var on = axes.filter(function (ax) { return state[ax]; });
     var all = box.querySelector('[data-filter-value=""]');
@@ -67,6 +78,7 @@
     state[ax] = state[ax] === v ? '' : v;
     show();
     history.replaceState(null, '', url());
+    retitle();
   });
 
   read();

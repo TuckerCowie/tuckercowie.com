@@ -110,3 +110,100 @@ test('with no choice made, the mood follows the system when it changes', async (
   await expect.poll(() => sentinel(page)).toBe(autoFor('dark'));
   await expect(page.locator(`[data-mood-set="${autoFor('dark')}"]`)).toHaveAttribute('aria-pressed', 'true');
 });
+
+// ---- regressions found by the foundation review ----
+
+test('reaching for the switcher changes nothing until a mood is picked', async ({ browser }) => {
+  for (const scheme of ['light', 'dark']) {
+    const context = await browser.newContext({ colorScheme: scheme });
+    const page = await context.newPage();
+    await page.goto('/');
+    await page.locator('[data-c="switcher"]').hover();
+    await page.locator('[data-mood-set]').first().focus();
+    await page.waitForLoadState('networkidle');
+    expect(await sentinel(page)).toBe(autoFor(scheme));
+    expect(await page.evaluate(() => document.documentElement.hasAttribute('data-mood'))).toBe(false);
+    expect(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme)).toBe(scheme);
+    await context.close();
+  }
+});
+
+test('picking the other system default works on either system scheme', async ({ browser }) => {
+  for (const scheme of ['light', 'dark']) {
+    const context = await browser.newContext({ colorScheme: scheme });
+    const page = await context.newPage();
+    await page.goto('/');
+    const target = autoFor(scheme === 'light' ? 'dark' : 'light');
+    await page.locator(`[data-mood-set="${target}"]`).click();
+    await expect.poll(() => sentinel(page)).toBe(target);
+    await page.reload();
+    expect(await sentinel(page)).toBe(target);
+    await context.close();
+  }
+});
+
+test('a stylesheet that fails to load leaves the mood as it was and says so', async ({ page }) => {
+  await page.route(`**/moods/${explicit}.css`, (route) => route.abort());
+  await page.goto('/');
+  const before = await sentinel(page);
+  await page.locator(`[data-mood-set="${explicit}"]`).click();
+  await expect(page.locator('#mood-status')).toContainText('did not change');
+  expect(await sentinel(page)).toBe(before);
+  expect(await page.evaluate((k) => localStorage.getItem(k), storageKey)).toBeNull();
+  // A saved mood whose sheet is gone falls back to the system default on load.
+  await page.evaluate(([k, v]) => localStorage.setItem(k, v), [storageKey, explicit]);
+  await page.reload();
+  expect(await sentinel(page)).toBe(before);
+});
+
+test('with storage blocked the choice travels in the URL', async ({ browser }) => {
+  const context = await browser.newContext({ colorScheme: 'light' });
+  await context.addInitScript(() => { Object.defineProperty(window, 'localStorage', { get() { throw new Error('blocked'); } }); });
+  const page = await context.newPage();
+  await page.goto('/');
+  await page.locator(`[data-mood-set="${explicit}"]`).click();
+  await expect.poll(() => sentinel(page)).toBe(explicit);
+  expect(new URL(page.url()).searchParams.get(param)).toBe(explicit);
+  await page.locator('.site-nav a').first().click();
+  await page.waitForLoadState();
+  expect(await sentinel(page)).toBe(explicit);
+  await context.close();
+});
+
+test('the last of two quick picks wins', async ({ page }) => {
+  await page.route(`**/moods/${explicit}.css`, async (route) => { await new Promise((r) => setTimeout(r, 700)); await route.continue(); });
+  await page.goto('/');
+  await page.locator(`[data-mood-set="${explicit}"]`).click();
+  await page.locator(`[data-mood-set="${other}"]`).click();
+  await expect.poll(() => sentinel(page)).toBe(other);
+  await page.waitForTimeout(1200);
+  expect(await sentinel(page)).toBe(other);
+  expect(await page.evaluate((k) => localStorage.getItem(k), storageKey)).toBe(other);
+});
+
+test('pressing the mood that came from the URL saves it', async ({ page }) => {
+  await page.goto(`/?${param}=${explicit}`);
+  await page.locator(`[data-mood-set="${explicit}"]`).click();
+  await expect.poll(() => page.evaluate((k) => localStorage.getItem(k), storageKey)).toBe(explicit);
+  expect(new URL(page.url()).searchParams.get(param)).toBeNull();
+});
+
+test('the browser toolbar colour is right before any script has run', async ({ browser }) => {
+  const context = await browser.newContext({ colorScheme: 'light' });
+  const page = await context.newPage();
+  await page.route('**/js/mood.js', (route) => route.abort());
+  await page.goto(`/?${param}=${explicit}`);
+  const first = await page.evaluate(() => document.querySelector('meta[name="theme-color"]').content);
+  const config = JSON.parse(await page.locator('#mood-config').textContent());
+  expect(first).toBe(config.moods.find((m) => m.id === explicit).theme);
+  expect(first).toMatch(/^#[0-9a-f]{6}$/);
+  await context.close();
+});
+
+test('a page restored from the back/forward cache picks up a choice made elsewhere', async ({ page }) => {
+  await page.goto('/');
+  await page.evaluate(([k, v]) => localStorage.setItem(k, v), [storageKey, explicit]);
+  await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true })));
+  await expect.poll(() => sentinel(page)).toBe(explicit);
+  await expect(page.locator(`[data-mood-set="${explicit}"]`)).toHaveAttribute('aria-pressed', 'true');
+});

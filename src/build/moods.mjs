@@ -31,6 +31,8 @@ function scopeSelector(sel, scope) {
   const first = sel[0];
   const isRoot = first && ((first.type === 'pseudo-class' && first.kind === 'root') || (first.type === 'type' && first.name === 'html'));
   if (isRoot) return [...scope, ...sel.slice(1)];
+  // View-transition pseudo-elements only exist on the root element.
+  if (first && first.type === 'pseudo-element' && String(first.kind).startsWith('view-transition')) return [...scope, ...sel];
   return [...scope, { type: 'combinator', value: 'descendant' }, ...sel];
 }
 
@@ -48,7 +50,12 @@ export function compileMood(mood, { srcDir, minify = true }) {
     // visitor breaks on var() in lightningcss 1.33.)
     visitor: { Selector: (sel) => scopeSelector(sel, scope) },
   });
-  if (/@font-face/.test(flat.code.toString())) throw new Error(`${mood.id}.css: @font-face belongs in src/build/fonts.mjs, not in a mood`);
+  const source = flat.code.toString().replace(/\/\*[\s\S]*?\*\//g, '');
+  if (/@font-face/.test(source)) throw new Error(`${mood.id}.css: @font-face belongs in src/build/fonts.mjs, not in a mood`);
+  // A layered rule loses to base.css whatever its selector, and @scope
+  // cannot be combined with the mood prefix. Neither is needed here.
+  if (/@layer\b/.test(source)) throw new Error(`${mood.id}.css: @layer is not allowed in a mood. Layered rules would lose to src/styles/base.css.`);
+  if (/@scope\b/.test(source)) throw new Error(`${mood.id}.css: @scope is not allowed in a mood. The build already scopes the whole stylesheet.`);
   // A sentinel the checks read, the colour scheme for form controls, and a
   // rule that keeps the specimen page to this mood's own token table.
   const sentinel = transform({
@@ -75,14 +82,18 @@ export function readToken(flatCss, token) {
 // that the parser creates it. A parser-created stylesheet link blocks
 // rendering, so the first paint is never the wrong mood.
 export function moodHead({ u, themeColors }) {
-  const map = Object.fromEntries(moods.map((m) => [m.id, m.scheme]));
+  // The map carries each mood's theme colour, so the browser toolbar is right
+  // from the first paint, not only after mood.js has run.
+  const map = Object.fromEntries(moods.map((m) => [m.id, themeColors[m.id]]));
   const base = u('/moods/', { dir: true });
+  // If the chosen sheet fails to load, drop back to the system default.
+  const fail = `this.remove();var r=document.documentElement;r.removeAttribute(&quot;data-mood&quot;);r.removeAttribute(&quot;data-mood-from&quot;)`;
   const script =
     `!function(d,M,B){var r=d.documentElement,m,f,h=Object.prototype.hasOwnProperty;` +
     `try{m=new URLSearchParams(location.search).get(${JSON.stringify(param)})}catch(e){}` +
     `if(m&&h.call(M,m))f="url";else{try{m=localStorage.getItem(${JSON.stringify(storageKey)})}catch(e){m=null}` +
     `if(m&&h.call(M,m))f="saved";else return}` +
-    `d.write('<link rel="stylesheet" data-mood-sheet="'+m+'" href="'+B+m+'.css">');` +
+    `d.write('<meta name="theme-color" data-mood-theme content="'+M[m]+'"><link rel="stylesheet" data-mood-sheet="'+m+'" href="'+B+m+'.css" onerror="${fail}">');` +
     `if(d.querySelector('link[data-mood-sheet="'+m+'"]')){r.setAttribute("data-mood",m);r.setAttribute("data-mood-from",f)}` +
     `}(document,${JSON.stringify(map)},${JSON.stringify(base)});`;
   const autos = moods.filter((m) => m.auto);

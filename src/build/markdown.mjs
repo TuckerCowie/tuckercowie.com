@@ -128,5 +128,34 @@ export function parseBody(source, { file, lineOffset = 0, allowPlates = true }) 
   return { introHtml: renderTokens(intro), plates, errors };
 }
 
-export const renderInline = (s) => md.renderInline(String(s));
-export const renderMarkdown = (s) => md.render(String(s));
+// Outside an entry's plates there is no image pipeline, so images are turned
+// off: an image written there stays as literal text and can never become a
+// request to another site.
+const mdText = new MarkdownIt({ html: false, typographer: false, linkify: false }).disable('image');
+export const renderInline = (s) => mdText.renderInline(String(s));
+export const renderMarkdown = (s) => mdText.render(String(s));
+
+// Checks for prose that is not an entry body: the manual, the systems page
+// and collection intros. headings: 'h2-first' allows only "## " headings and
+// no text before the first one; 'none' allows no headings at all.
+export function checkProse(source, { file, lineOffset = 0, headings = 'none' }) {
+  const errors = [];
+  const err = (line, msg) => errors.push(new ContentError(file, line + lineOffset + 1, msg));
+  const tokens = md.parse(source, {});
+  let seenHeading = false;
+  for (let i = 0; i < tokens.length; i++) {
+    const t = tokens[i];
+    const line = t.map?.[0] ?? 0;
+    if (t.type === 'heading_open') {
+      if (headings === 'none') err(line, 'No headings here. This text is a short introduction.');
+      else if (t.tag !== 'h2') err(line, `Only "## " headings are allowed here; found <${t.tag}>.`);
+      else if (!tokens[i + 1]?.content.trim()) err(line, 'A heading is empty.');
+      seenHeading = true;
+    } else if (headings === 'h2-first' && !seenHeading && t.level === 0 && t.type.endsWith('_open')) {
+      err(line, 'Text must sit under a "## " heading. Add a heading above this line.');
+      seenHeading = true;   // report once
+    }
+    if (t.type === 'inline' && (t.children ?? []).some((c) => c.type === 'image')) err(line, 'Images are only supported inside the plates of an entry.');
+  }
+  return errors;
+}

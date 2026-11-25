@@ -58,6 +58,9 @@ export function lintMood(id) {
   css = css.replace(/\/\*[\s\S]*?\*\//g, '');
   if (/@font-face/.test(css)) errors.push('@font-face is not allowed in a mood. Faces are declared in src/build/fonts.mjs.');
   if (/url\(\s*["']?https?:/i.test(css)) errors.push('A mood may not load anything from another origin.');
+  if (/@layer\b/.test(css)) errors.push('@layer is not allowed in a mood: layered rules would lose to src/styles/base.css.');
+  if (/@scope\b/.test(css)) errors.push('@scope is not allowed in a mood: the build already scopes the whole stylesheet.');
+  if (/(:is|:where)\(\s*(:root|html)\b/.test(css)) errors.push('Write the root as :root or html, not inside :is() or :where(); the build cannot scope it there.');
 
   for (const rule of leaves(css)) {
     const where = `${rule.at.length ? rule.at.join(' ') + ' ' : ''}${rule.selector}`.replace(/\s+/g, ' ').slice(0, 110);

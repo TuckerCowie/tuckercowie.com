@@ -5,6 +5,7 @@
 import { html, raw } from '../build/html.mjs';
 import { orn, head, title, picture, list, draftTag, plural } from './parts.mjs';
 import { shell } from './shell.mjs';
+import { linkList } from './case.mjs';
 
 // <li><strong>Term</strong> text</li> becomes a term and description pair.
 const pairs = (h) => h.replace(/<li><strong>([^<]+)<\/strong>\s*/g, '<li class="pair"><span class="pair__term">$1</span> <span class="pair__desc">').replace(/(<li class="pair">[\s\S]*?)<\/li>/g, '$1</span></li>');
@@ -23,7 +24,7 @@ ${profile.portrait ? html`<figure class="portrait">${picture(ctx, profile.portra
 <div class="c c-manual" data-c="manual" style="--n:${n}">
 ${orn()}
 ${head({ label: 'Manual', readout: plural(n, 'section', 'sections') })}
-${manual.sections.map((s, i) => html`<section class="manual__section" style="--i:${i + 1}" id="manual-${i + 1}"><h2 class="manual__title">${raw(s.title)}</h2>${s.lede ? html`<p class="manual__lede">${raw(s.lede)}</p>` : ''}<div class="prose manual__body">${raw(pairs(s.html))}</div></section>`)}
+${manual.sections.map((s, i) => html`<section class="manual__section" style="--i:${i + 1}" id="manual-${i + 1}"><h2 class="manual__title">${raw(s.title)}</h2>${s.lede ? html`<p class="manual__lede">${raw(s.lede)}</p>` : ''}<div class="prose manual__body">${ctx.md(pairs(s.html))}</div></section>`)}
 </div>
 ${profile.statements.length ? html`<section class="c c-statements" data-c="statements">
 ${orn()}
@@ -39,7 +40,7 @@ ${profile.assessments_note ? html`<p class="assessments__note">${profile.assessm
 <section class="c c-career" data-c="career">
 ${orn()}
 ${head({ label: 'Career', tag: 'h2', readout: plural(profile.career.length, 'role', 'roles') })}
-<ol class="career" style="--n:${profile.career.length}">${profile.career.map((r, i) => html`<li class="career__row" style="--i:${i + 1}"><span class="career__when">${r.from ? `${r.from} to ${r.to ?? 'now'}` : 'Now'}${r.draft ? html` ${draftTag()}` : ''}</span> <span class="career__role">${r.role}</span> <span class="career__org">${r.organisation}</span>${r.note ? html` <span class="career__note">${r.note}</span>` : ''}</li>`)}</ol>
+<ol class="career" role="list" style="--n:${profile.career.length}">${profile.career.map((r, i) => html`<li class="career__row" style="--i:${i + 1}"><span class="career__when">${r.from ? `${r.from} to ${r.to ?? 'now'}` : 'Now'}${r.draft ? html` ${draftTag()}` : ''}</span> <span class="career__role">${r.role}</span> <span class="career__org">${r.organisation}</span>${r.note ? html` <span class="career__note">${r.note}</span>` : ''}</li>`)}</ol>
 ${profile.education.length ? html`<h3 class="c-sublabel">Education and training</h3>${list('ul', profile.education.map((e) => html`<span class="edu__title">${e.title}</span> <span class="edu__org">${e.organisation}</span>${e.when ? html` <span class="edu__when">${e.when}</span>` : ''}`), 'education')}` : ''}
 <p class="career__resume"><a href="${ctx.u('/resume/')}">Printable resume</a></p>
 </section>`;
@@ -58,7 +59,7 @@ ${head({ label: 'Systems' })}
 <section class="c c-pipeline" data-c="pipeline">
 ${orn()}
 ${head({ label: 'Pipeline', tag: 'h2', readout: plural(stages.length, 'stage', 'stages') })}
-<ol class="pipeline" style="--n:${stages.length}">${stages.map((s, i) => html`<li class="stage" style="--i:${i + 1}"${raw(s.gate ? ' data-gate' : '')}><span class="stage__name">${s.name}</span>${s.note ? html` <span class="stage__note">${s.note}</span>` : ''}</li>`)}</ol>
+<ol class="pipeline" role="list" style="--n:${stages.length}">${stages.map((s, i) => html`<li class="stage" style="--i:${i + 1}"${raw(s.gate ? ' data-gate' : '')}><span class="stage__name">${s.name}</span>${s.note ? html` <span class="stage__note">${s.note}</span>` : ''}</li>`)}</ol>
 <p class="pipeline__note">${systems.pipeline_note}</p>
 </section>
 ${systems.numbers.length ? html`<section class="c c-numbers" data-c="numbers">
@@ -69,18 +70,18 @@ ${head({ label: 'Numbers', tag: 'h2' })}
 <div class="c c-method" data-c="method" style="--n:${systems.sections.length}">
 ${orn()}
 ${head({ label: 'Method', readout: plural(systems.sections.length, 'part', 'parts') })}
-${systems.sections.map((s, i) => html`<section class="method__section" style="--i:${i + 1}"><h2 class="method__title">${raw(s.title)}</h2>${s.lede ? html`<p class="method__lede">${raw(s.lede)}</p>` : ''}<div class="prose method__body">${raw(pairs(s.html))}</div></section>`)}
+${systems.sections.map((s, i) => html`<section class="method__section" style="--i:${i + 1}"><h2 class="method__title">${raw(s.title)}</h2>${s.lede ? html`<p class="method__lede">${raw(s.lede)}</p>` : ''}<div class="prose method__body">${ctx.md(pairs(s.html))}</div></section>`)}
 </div>
 ${systems.principles.length ? html`<section class="c c-principles" data-c="principles">
 ${orn()}
 ${head({ label: 'Principles', tag: 'h2' })}
 ${list('ul', systems.principles, 'principles')}
 </section>` : ''}
-<section class="c c-published" data-c="published">
+${systems.published.length || ctx.preview ? html`<section class="c c-published" data-c="published">
 ${orn()}
 ${head({ label: 'Published skills', tag: 'h2', draft: !systems.published.length })}
-${systems.published.length ? html`<ul class="links" style="--n:${systems.published.length}">${systems.published.map((l, i) => html`<li style="--i:${i + 1}"><a class="link" href="${l.href}" rel="noopener">${l.label}</a></li>`)}</ul>` : ''}
+${systems.published.length ? linkList(ctx, systems.published) : ''}
 ${systems.published_note ? html`<p class="published__note">${systems.published_note}</p>` : ''}
-</section>`;
+</section>` : ''}`;
   return shell(ctx, { title: 'Systems', page: 'systems', section: 'systems', body, description: systems.lede });
 }
