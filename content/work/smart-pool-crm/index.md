@@ -62,7 +62,7 @@ We evaluated the best service CRMs to determine clusters and gaps in their strat
 
 Through interviews with partners in our pilot program, we discovered service companies would prefer ***not*** to do routine cleanings and instead make most money on one-time maintenance work orders.
 
-![Part of a partner interview transcript. One passage is highlighted, about automatically scheduling a technician when a customer says their motor is out. The partner's name is blurred.](./partner-interview.jpg "A partner interview transcript, with the passage behind the insight highlighted.")
+![A partner interview transcript in a browser. One passage is highlighted: when a customer calls to say their motor is out, a technician is scheduled automatically. The other speakers' names are blurred.](./partner-interview.jpg "A partner interview transcript, with the passage behind the insight highlighted.")
 
 > “For somebody who just calls in and says: ‘our motor is out,’ we would just automatically schedule them [for service]...”
 

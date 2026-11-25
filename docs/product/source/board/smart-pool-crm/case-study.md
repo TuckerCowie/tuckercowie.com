@@ -121,7 +121,7 @@ Body: Through interviews with partners in our pilot program, we discovered servi
 
 INSIGHT: Pros need better ways to expose customer pool issues sooner while decreasing time spent on the phone, dispatching technicians in order to increase revenue and reduce costs
 
-Image: screenshot of an Otter.ai transcript between Tucker Cowie, Jason and Andrew Clancy, with one passage highlighted: "For somebody who just calls in and says "our motors out," we would just automatically schedule them and have somebody a technician go out." Page tab labels: "My Conversations - Otter.ai", "Jason @ Venture w/ Clancy". No caption.
+Image: screenshot of an Otter.ai transcript between Tucker Cowie and two partners (names withheld), with one passage highlighted: "For somebody who just calls in and says "our motors out," we would just automatically schedule them and have somebody a technician go out." Page tab labels: "My Conversations - Otter.ai" and a second tab naming the call (withheld). No caption.
 
 ## Frame 19
 Frame title: 19 Smart Pool CRM - Service Blueprinting
