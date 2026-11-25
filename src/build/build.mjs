@@ -17,7 +17,7 @@ import { raw } from './html.mjs';
 import { toHex } from './colour.mjs';
 import { homePage } from '../templates/home.mjs';
 import { entryPage } from '../templates/case.mjs';
-import { workPage, ledgerPage, facets, normalise } from '../templates/work.mjs';
+import { workPage, ledgerPage, facets, normalise, indexed } from '../templates/work.mjs';
 import { profilePage, systemsPage } from '../templates/profile.mjs';
 import { resumePage, specimenPage, notFoundPage } from '../templates/extra.mjs';
 import { FONT_FILES, fontCss } from './fonts.mjs';
@@ -120,7 +120,7 @@ async function main() {
   const page = (p, render) => pages.push({ path: p, render });
   page('/', homePage);
   page('/work/', (ctx) => workPage(ctx));
-  const f = facets(content.entries);
+  const f = facets(indexed(content.entries));
   for (const v of f.type) page(`/work/type/${v.key}/`, (ctx) => workPage(ctx, { active: { type: v.key }, docTitle: `${TYPES[v.key].plural}, Work` }));
   for (const v of f.org) page(`/work/org/${v.key}/`, (ctx) => workPage(ctx, { active: { org: v.key }, docTitle: `${v.label}, Work` }));
   for (const v of f.skill) page(`/work/skill/${v.key}/`, (ctx) => workPage(ctx, { active: { skill: v.key }, docTitle: `${v.label}, Work` }));

@@ -8,6 +8,10 @@ import { TYPES, STATUSES } from '../build/content.mjs';
 import { orn, head, title, plural, draftTag } from './parts.mjs';
 import { shell } from './shell.mjs';
 
+// The index holds the work a reader can open: case studies, workshops,
+// talks, certifications and awards. Products have their own view, the ledger.
+export const indexed = (entries) => entries.filter((e) => e.type !== 'product');
+
 export function facets(entries) {
   const count = (map, key, label) => { const c = map.get(key) ?? { key, label, n: 0 }; c.n++; map.set(key, c); };
   const type = new Map(), org = new Map(), skill = new Map();
@@ -81,7 +85,7 @@ ${orn()}
 ${head({ label: 'Collections', tag: 'h2' })}
 <ul class="collections" role="list" style="--n:${collections.length + 1}">
 ${collections.map((c, i) => {
-    const n = entries.filter((e) => matches(e, normalise(c.filter))).length;
+    const n = indexed(entries).filter((e) => matches(e, normalise(c.filter))).length;
     return html`<li class="collection" style="--i:${i + 1}"><a href="${ctx.u(`/work/c/${c.slug}/`)}"><span class="collection__name">${c.title}</span> <span class="collection__n">${plural(n, 'entry', 'entries')}</span></a></li>`;
   })}
 <li class="collection" style="--i:${collections.length + 1}"><a href="${ctx.u('/work/ledger/')}"><span class="collection__name">Works ledger</span> <span class="collection__n">Products and systems, with an honest status</span></a></li>
@@ -92,7 +96,7 @@ ${collections.map((c, i) => {
 export const normalise = (f) => ({ type: f.type ?? null, org: f.organisation ? slugify(f.organisation) : (f.org ?? null), skill: f.skill ? slugify(f.skill) : null });
 
 export function workPage(ctx, { active = {}, heading = 'Work', docTitle = null, intro = null, kicker = null, collection = false } = {}) {
-  const all = ctx.content.entries;
+  const all = indexed(ctx.content.entries);
   const body = html`<section class="c c-pagehead" data-c="pagehead">
 ${orn()}
 ${head({ label: kicker ?? 'Work' })}

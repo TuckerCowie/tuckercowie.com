@@ -208,7 +208,9 @@ div.c.c-index[data-c=index]
 section.c.c-collections[data-c=collections] > div.c-head > h2.c-label ; ul.collections > li.collection > a > span.collection__name + span.collection__n
 ```
 
-The index stays a table in every mood, with six columns: Year, Title,
+The index lists case studies, workshops, talks, certifications and awards.
+Products are listed on the Works ledger instead. It stays a table in every
+mood, with six columns: Year, Title,
 About, Organisation, Type, Role. The tables never scroll sideways. At narrow
 widths restyle the rows (`display: grid` on `tr` is fine, and the About cell
 can sit under the title) but keep every cell that has text visible.
