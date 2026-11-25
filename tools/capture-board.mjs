@@ -2,6 +2,7 @@
 //
 //   node tools/capture-board.mjs <out-dir>
 //   SCALE=2 node tools/capture-board.mjs <out-dir>     twice the pixels, for sharper artifacts
+//   FRAMES=24,27,35 node tools/capture-board.mjs <out-dir>   only these frames
 //
 // Needs Playwright with Chromium. The board loads from several hosts, so a
 // restricted network must allow: miro.com, mirostatic.com, r.miro.com,
@@ -36,6 +37,20 @@ const total = await page.evaluate((row) => {
   return list ? Math.round(list.getBoundingClientRect().height / row) : 0;
 }, ROW);
 
+// Miro paints a frame with low-resolution tiles first and sharpens them as
+// they load. Wait until two screenshots in a row are identical.
+async function settled(clip) {
+  let last = null;
+  for (let tries = 0; tries < 16; tries++) {
+    await page.waitForTimeout(3000);
+    const shot = await page.screenshot({ clip });
+    if (last && shot.equals(last)) return shot;
+    last = shot;
+  }
+  return last;
+}
+
+const only = process.env.FRAMES ? new Set(process.env.FRAMES.split(',').map(Number)) : null;
 const titles = [];
 for (let i = 0; i < total; i++) {
   // The list is virtualised, so scroll each entry into existence first.
@@ -47,12 +62,15 @@ for (let i = 0; i < total; i++) {
   }, [i, ROW]);
   await page.waitForTimeout(500);
   const el = await page.$(`[data-testid="frame${i}"]`);
+  // The list only renders entries near the selected one, so a skipped frame
+  // is still selected briefly to keep the list moving.
+  if (only && !only.has(i + 1)) { if (el) { await el.click(); await page.waitForTimeout(400); } continue; }
   if (!el) { console.warn('missing frame', i + 1); continue; }
   const title = (await el.innerText()).replace(/\n/g, ' ').trim();
   await el.click();
-  await page.waitForTimeout(5500);
+  await page.waitForTimeout(2500);
   const n = String(i + 1).padStart(2, '0');
-  await page.screenshot({ path: `${out}/frame-${n}.png`, clip: { x: 60, y: 64, width: VW - 420, height: VH - 64 } });
+  fs.writeFileSync(`${out}/frame-${n}.png`, await settled({ x: 60, y: 64, width: VW - 420, height: VH - 64 }));
   titles.push({ frame: n, title });
 }
 fs.writeFileSync(`${out}/frames.json`, JSON.stringify(titles, null, 1));
