@@ -1,3 +1,125 @@
-/* placeholder */
-:root { --paper: oklch(0.972 0.006 210); --ground: oklch(0.17 0.03 250); --void: oklch(0.13 0.025 280); }
-body { background: var(--paper); }
+@import "./_water/skeleton.css";
+
+/* Still Water: Tucker's manual extended to a whole site. Light, quiet, exact. */
+
+:root {
+  /* colour: cool paper, slate ink, one teal */
+  --paper:       oklch(0.972 0.006 210);
+  --paper-2:     oklch(0.945 0.009 210);
+  --ink:         oklch(0.28 0.028 245);
+  --ink-soft:    oklch(0.44 0.026 240);
+  --ink-faint:   oklch(0.58 0.02 235);
+  --teal:        oklch(0.56 0.072 205);
+  --teal-text:   oklch(0.50 0.075 205);
+  --line:        oklch(0.86 0.014 220);
+  --line-strong: oklch(0.62 0.03 225);
+
+  /* role tokens the shared skeleton is written against */
+  --surface:     var(--paper);
+  --surface-2:   var(--paper-2);
+  --text:        var(--ink);
+  --text-soft:   var(--ink-soft);
+  --text-faint:  var(--ink-faint);
+  --accent:      var(--teal);
+  --accent-text: var(--teal-text);
+  --rule:        var(--line);
+  --rule-strong: var(--line-strong);
+  --focus:       var(--teal-text);
+  --mat:         var(--paper-2);
+  --mat-text:    var(--ink);
+  --mat-rule:    var(--line);
+  --numeral:     var(--ink-faint);
+  --ripple:      var(--line-strong);
+  --epigraph:    var(--ink-soft);
+  --title-tail:  var(--ink);
+
+  /* status hues: small, always beside a label */
+  --st-shipped: oklch(0.50 0.09 150);
+  --st-running: oklch(0.50 0.08 250);
+  --st-growing: oklch(0.50 0.09 110);
+  --st-built:   oklch(0.50 0.05 290);
+  --st-parked:  oklch(0.53 0.10 70);
+  --st-killed:  oklch(0.50 0.13 25);
+
+  /* faces */
+  --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-sans:  "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:  "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --w-display: 400;
+  --w-display-xl: 300;
+
+  /* type scale */
+  --fs-micro:   0.75rem;
+  --fs-mono:    0.8125rem;
+  --fs-small:   0.9375rem;
+  --fs-body:    1.125rem;
+  --fs-lead:    1.3125rem;
+  --fs-brand:   1.375rem;
+  --fs-h3:      clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem);
+  --fs-insight: clamp(1.5rem, 1.2rem + 1vw, 1.95rem);
+  --fs-h2:      clamp(1.75rem, 1.3rem + 1.6vw, 2.6rem);
+  --fs-h1:      clamp(2.5rem, 1.6rem + 3.4vw, 4.5rem);
+  --fs-numeral: clamp(2.5rem, 1.8rem + 2.6vw, 4.5rem);
+  --fs-title:   clamp(2.75rem, 1.4rem + 5.2vw, 5.75rem);
+  --fs-display: clamp(3.5rem, 1.8rem + 5.6vw, 6.75rem);
+  --lh-body: 1.62;
+  --lh-lead: 1.5;
+  --lh-snug: 1.45;
+  --lh-tight: 1.2;
+  --lh-title: 1.14;
+  --lh-display: 1.02;
+  --track-mono: 0.12em;
+  --track-display: -0.005em;
+  --track-title: -0.018em;
+
+  /* space: an 8px step with half steps */
+  --sp-0: 0.25rem;
+  --sp-1: 0.5rem;
+  --sp-2: 1rem;
+  --sp-3: 1.5rem;
+  --sp-4: 2rem;
+  --sp-5: 3rem;
+  --sp-6: 4.5rem;
+  --sp-7: 6rem;
+  --sp-8: 9rem;
+
+  /* layout and knobs */
+  --fs-date: var(--fs-numeral);
+  --clear: transparent;
+  --fs-code: 0.95rem;
+  --radius: 2px;
+  --page: 84rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --gap: 3rem;
+  --rail: 11rem;
+  --measure: 38rem;
+  --epigraph-max: 46rem;
+  --title-max: 46rem;
+  --head-h: 4.5rem;
+  --ctl: 1.75rem;
+  --glyph: 0.75rem;
+  --dot: 0.5rem;
+  --mark: 1.5rem;
+  --ring-w: 2px;
+  --ring-gap: 3px;
+  --ul-offset: 0.22em;
+  --card-min: 18rem;
+  --filter-col: 8rem;
+  --skills-col: 6rem;
+  --count-col: 2.25rem;
+  --mat-pad: 1.25rem;
+  --tall-max: 34rem;
+  --plate-text-offset: 0.5rem;
+  --orn-top: -1.5rem;
+  --orn-end: 0rem;
+  --orn-size-narrow: 9rem;
+  --orn-size: 19rem;
+  --home-pad: 2rem;
+  --motif-size: 30rem;
+  --motif-size-narrow: 18rem;
+}
+
+/* Still Water only: a few quiet particulars. */
+.c-summary .c-orn { opacity: 1; }
+.switcher__btn[data-mood-set="deep"] .switcher__glyph { background: transparent; }
+.switcher__btn[data-mood-set="deep"][aria-pressed="true"] .switcher__glyph { background: transparent; }

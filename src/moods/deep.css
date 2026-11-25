@@ -1,3 +1,155 @@
-/* placeholder */
-:root { --paper: oklch(0.972 0.006 210); --ground: oklch(0.17 0.03 250); --void: oklch(0.13 0.025 280); }
-body { background: var(--paper); }
+@import "./_water/skeleton.css";
+
+/* Deep Water: the same still water seen from below the surface. */
+
+:root {
+  --ground:    oklch(0.17 0.03 250);
+  --ground-2:  oklch(0.22 0.035 250);
+  --ink:       oklch(0.94 0.01 220);
+  --ink-soft:  oklch(0.76 0.02 225);
+  --ink-faint: oklch(0.60 0.03 235);
+  --line:      oklch(0.34 0.03 245);
+  --line-strong: oklch(0.52 0.04 240);
+  --light:     oklch(0.82 0.11 200);
+  --mat-paper: oklch(0.96 0.006 210);
+  --mat-ink:   oklch(0.28 0.028 245);
+  --mat-line:  oklch(0.85 0.01 215);
+
+  --surface:     var(--ground);
+  --surface-2:   var(--ground-2);
+  --text:        var(--ink);
+  --text-soft:   var(--ink-soft);
+  --text-faint:  var(--ink-faint);
+  --accent:      var(--light);
+  --accent-text: var(--light);
+  --rule:        var(--line);
+  --rule-strong: var(--line-strong);
+  --focus:       var(--light);
+  --mat:         var(--mat-paper);
+  --mat-text:    var(--mat-ink);
+  --mat-rule:    var(--mat-line);
+  --numeral:     var(--ink-faint);
+  --ripple:      var(--line-strong);
+  --epigraph:    var(--light);
+  --title-tail:  var(--ink);
+
+  --st-shipped: oklch(0.80 0.14 150);
+  --st-running: oklch(0.80 0.10 250);
+  --st-growing: oklch(0.86 0.15 115);
+  --st-built:   oklch(0.78 0.10 300);
+  --st-parked:  oklch(0.82 0.13 80);
+  --st-killed:  oklch(0.72 0.16 25);
+
+  --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-sans:  "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:  "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --w-display: 400;
+  --w-display-xl: 300;
+
+  --fs-micro:   0.75rem;
+  --fs-mono:    0.8125rem;
+  --fs-small:   0.9375rem;
+  --fs-body:    1.125rem;
+  --fs-lead:    1.3125rem;
+  --fs-brand:   1.375rem;
+  --fs-h3:      clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem);
+  --fs-insight: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  --fs-h2:      clamp(1.875rem, 1.2rem + 2.4vw, 3.5rem);
+  --fs-h1:      clamp(2.75rem, 1.6rem + 4.4vw, 5.5rem);
+  --fs-numeral: clamp(2.75rem, 1.8rem + 3.6vw, 5.5rem);
+  --fs-title:   clamp(3.25rem, 1.4rem + 7vw, 8.5rem);
+  --fs-display: clamp(3.5rem, 1.8rem + 7.5vw, 9.5rem);
+  --lh-body: 1.72;
+  --lh-lead: 1.55;
+  --lh-snug: 1.5;
+  --lh-tight: 1.2;
+  --lh-title: 1.1;
+  --lh-display: 0.96;
+  --track-mono: 0.14em;
+  --track-display: -0.005em;
+  --track-title: -0.025em;
+
+  --sp-0: 0.25rem;
+  --sp-1: 0.5rem;
+  --sp-2: 1rem;
+  --sp-3: 1.5rem;
+  --sp-4: 2rem;
+  --sp-5: 3rem;
+  --sp-6: 4.5rem;
+  --sp-7: 6rem;
+  --sp-8: 9rem;
+
+  --fs-date: clamp(2.5rem, 1.6rem + 2.6vw, 4.25rem);
+  --clear: transparent;
+  --fs-code: 0.95rem;
+  --radius: 0;
+  --page: 84rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --gap: 3rem;
+  --rail: 11rem;
+  --measure: 36rem;
+  --epigraph-max: 46rem;
+  --title-max: 62rem;
+  --head-h: 4.5rem;
+  --ctl: 1.75rem;
+  --glyph: 0.75rem;
+  --dot: 0.5rem;
+  --mark: 1.5rem;
+  --ring-w: 2px;
+  --ring-gap: 3px;
+  --ul-offset: 0.22em;
+  --card-min: 18rem;
+  --filter-col: 8rem;
+  --skills-col: 6rem;
+  --count-col: 2.25rem;
+  --mat-pad: clamp(1rem, 0.4rem + 2vw, 2rem);
+  --tall-max: 34rem;
+  --plate-text-offset: 0.5rem;
+  --orn-top: -3rem;
+  --orn-end: -6rem;
+  --orn-size-narrow: 9rem;
+  --orn-size: 24rem;
+  --home-pad: 2rem;
+  --motif-size: 30rem;
+  --motif-size-narrow: 18rem;
+  --motif-size-deep: 56rem;
+  --motif-bleed: 14rem;
+  --ripple-cycle: 18s;
+}
+
+/* Deep Water only: the ripple made large, off-centre and cropped by the viewport. */
+html, body { overflow-x: clip; }
+.c-home > *:not(.motif) { z-index: 1; }
+.motif {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: calc(var(--motif-bleed) * -1);
+  grid-column: auto;
+  grid-row: auto;
+  width: var(--motif-size-deep);
+  max-width: none;
+  transform: translateY(-50%);
+  z-index: 0;
+}
+.motif__ring { stroke: var(--line-strong); }
+.motif__ring[data-i="4"] { stroke: var(--light); }
+.motif__ring[data-i="1"] { stroke: var(--line-strong); }
+.motif__core { fill: var(--light); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .motif__ring[data-i="2"], .motif__ring[data-i="3"], .motif__ring[data-i="5"] {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: deep-ripple var(--ripple-cycle) linear infinite;
+  }
+  .motif__ring[data-i="3"] { animation-delay: calc(var(--ripple-cycle) * -0.33); }
+  .motif__ring[data-i="5"] { animation-delay: calc(var(--ripple-cycle) * -0.66); }
+}
+@keyframes deep-ripple {
+  0% { transform: scale(0.88); opacity: 0; }
+  25% { opacity: 1; }
+  100% { transform: scale(1.12); opacity: 0; }
+}
+@media (max-width: 64rem) {
+  .motif { position: relative; inset: auto; transform: none; width: 100%; max-width: var(--motif-size-narrow); margin-inline: auto; }
+}

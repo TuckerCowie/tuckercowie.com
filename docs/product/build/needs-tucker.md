@@ -50,7 +50,7 @@ Confirm or reverse each. The originals are untouched in `docs/product/source/`.
 | 17 | Other people's names in artifacts: interview partners, names on app screens, a technician | Blurred in every image the site uses. The images are otherwise as they are |
 | 18 | Document and note addresses visible in browser screenshots | Blurred |
 | 19 | International Design Sprints: five photos show colleagues' faces | The study is written only, with its confidentiality line. The photos are not on the site |
-| 20 | B2B 48hr Visiontype: three screens show an operator's pipeline, station names and savings figures. The plate carries a confidentiality line, and the board blurs two of the three | The study is written only. The screens are not on the site |
+| 20 | B2B 48hr Visiontype: three screens show an operator's pipeline, station names and savings figures. The plate carries a confidentiality line, and the board blurs the first of them | The study is written only. The screens are not on the site |
 | 21 | App G2M & Repositioning, In action: four field photos show a technician | Two photos where his face cannot be made out are used. The other two and the video still are not |
 | 22 | The Visionboard includes stock and third-party imagery, one with a stock watermark | Used as it is on the board. Confirm the licence |
 | 23 | The portrait is the one from the board's closing frame | Used on Profile only |

@@ -49,9 +49,9 @@ Frame title: 38 48hr Visiontype - Visiontype
 
 Heading: Visiontype
 
-Images: three app screenshots side by side, labelled "Step 1", "Step 2" and "Step 3" above them. Steps 1 and 2 are heavily blurred; Step 3 is sharp.
+Images: three app screenshots side by side, labelled "Step 1", "Step 2" and "Step 3" above them. Step 1 is heavily blurred on the board. Steps 2 and 3 are sharp (Step 2 looked blurred only in a double-resolution capture taken before the board had finished loading).
 - Step 1 screenshot: a red-and-white desktop app window titled "Real-Time Flow Optimizer" (only this title is readable) with a playbook list at left, a table-filled playbook page in the middle and a notes column at right. All other text: [illegible]
-- Step 2 screenshot: the same app showing a grey map with a dashed pipeline line and green, yellow and red markers, a floating chart panel, a right-hand panel and a three-item legend at lower left. Title "Real-Time Flow Optimizer" is readable; all other text: [illegible]
+- Step 2 screenshot: the same app showing a grey map with a dashed pipeline line and green, yellow and red markers, a floating chart panel, a right-hand panel and a three-item legend at lower left. Title "Real-Time Flow Optimizer"; its text is transcribed in Frame 40
 - Step 3 screenshot: the app on the Evaluate tab with "Special Playbook", a Performance chart and a Notes column; the sharp text is transcribed in Frame 41.
 
 Captions under the screenshots:
