@@ -46,6 +46,7 @@ async function ready(page) {
       Promise.all([...document.images].map((i) => i.complete ? null : new Promise((r) => { i.addEventListener('load', r); i.addEventListener('error', r); }))),
       new Promise((r) => setTimeout(r, 8000)),
     ]);
+    await Promise.all([...document.images].map((i) => i.decode().catch(() => {})));
   });
 }
 

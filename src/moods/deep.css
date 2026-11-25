@@ -7,7 +7,7 @@
   --ground-2:  oklch(0.22 0.035 250);
   --ink:       oklch(0.94 0.01 220);
   --ink-soft:  oklch(0.76 0.02 225);
-  --ink-faint: oklch(0.60 0.03 235);
+  --ink-faint: oklch(0.64 0.03 235);
   --line:      oklch(0.34 0.03 245);
   --line-strong: oklch(0.52 0.04 240);
   --light:     oklch(0.82 0.11 200);
@@ -28,9 +28,10 @@
   --mat:         var(--mat-paper);
   --mat-text:    var(--mat-ink);
   --mat-rule:    var(--mat-line);
-  --numeral:     var(--ink-faint);
+  --numeral:     var(--ink-soft);
+  --foot:        var(--ground-2);
   --ripple:      var(--line-strong);
-  --epigraph:    var(--light);
+  --epigraph:    var(--ink);
   --title-tail:  var(--ink);
 
   --st-shipped: oklch(0.80 0.14 150);
@@ -47,18 +48,22 @@
   --w-display-xl: 300;
 
   --fs-micro:   0.75rem;
-  --fs-mono:    0.8125rem;
+  --fs-mono:    0.875rem;
   --fs-small:   0.9375rem;
   --fs-body:    1.125rem;
   --fs-lead:    1.3125rem;
   --fs-brand:   1.375rem;
   --fs-h3:      clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem);
+  --fs-quote:   1.375rem;
+  --fs-quote-home: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem);
+  --fs-door:    clamp(1.5rem, 1.2rem + 0.9vw, 1.75rem);
+  --fs-home:    1.125rem;
   --fs-insight: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
-  --fs-h2:      clamp(1.875rem, 1.2rem + 2.4vw, 3.5rem);
+  --fs-h2:      clamp(1.875rem, 1.2rem + 2.4vw, 3.75rem);
   --fs-h1:      clamp(2.75rem, 1.6rem + 4.4vw, 5.5rem);
   --fs-numeral: clamp(2.75rem, 1.8rem + 3.6vw, 5.5rem);
-  --fs-title:   clamp(3.25rem, 1.4rem + 7vw, 8.5rem);
-  --fs-display: clamp(3.5rem, 1.8rem + 7.5vw, 9.5rem);
+  --fs-title:   clamp(3rem, 1.4rem + 6.4vw, 7rem);
+  --fs-display: clamp(3.5rem, 1.8rem + 7.5vw, 7.25rem);
   --lh-body: 1.72;
   --lh-lead: 1.55;
   --lh-snug: 1.5;
@@ -79,13 +84,14 @@
   --sp-7: 6rem;
   --sp-8: 9rem;
 
-  --fs-date: clamp(2.5rem, 1.6rem + 2.6vw, 4.25rem);
   --clear: transparent;
   --fs-code: 0.95rem;
   --radius: 0;
   --page: 84rem;
   --gutter: clamp(1.25rem, 4vw, 3rem);
-  --gap: 3rem;
+  --gap: 2.5rem;
+  --hang: -0.42em;
+  --sp-group: 2.75rem;
   --rail: 11rem;
   --measure: 36rem;
   --epigraph-max: 46rem;
@@ -102,23 +108,26 @@
   --filter-col: 8rem;
   --skills-col: 6rem;
   --count-col: 2.25rem;
-  --mat-pad: clamp(1rem, 0.4rem + 2vw, 2rem);
+  --mat-pad: clamp(0.75rem, 0.3rem + 1.4vw, 1.5rem);
   --tall-max: 34rem;
   --plate-text-offset: 0.5rem;
-  --orn-top: -3rem;
-  --orn-end: -6rem;
+  --orn-top: 0rem;
+  --orn-end: 0rem;
   --orn-size-narrow: 9rem;
-  --orn-size: 24rem;
+  --orn-size: 17rem;
   --home-pad: 2rem;
   --motif-size: 30rem;
   --motif-size-narrow: 18rem;
-  --motif-size-deep: 56rem;
-  --motif-bleed: 14rem;
+  --motif-size-deep: 50rem;
+  --motif-bleed: 16rem;
   --ripple-cycle: 18s;
 }
 
-/* Deep Water only: the ripple made large, off-centre and cropped by the viewport. */
+/* Deep Water only: the ripple made large, off-centre and bled by the viewport. */
 html, body { overflow-x: clip; }
+main { overflow-x: clip; }
+.site-foot { background: var(--foot); }
+.mark__inner { stroke: var(--text-soft); }
 .c-home > *:not(.motif) { z-index: 1; }
 .motif {
   position: absolute;
@@ -126,30 +135,30 @@ html, body { overflow-x: clip; }
   inset-inline-end: calc(var(--motif-bleed) * -1);
   grid-column: auto;
   grid-row: auto;
+  margin: 0;
   width: var(--motif-size-deep);
   max-width: none;
   transform: translateY(-50%);
   z-index: 0;
 }
 .motif__ring { stroke: var(--line-strong); }
-.motif__ring[data-i="4"] { stroke: var(--light); }
-.motif__ring[data-i="1"] { stroke: var(--line-strong); }
+.motif__ring[data-i="1"] { stroke: var(--line-strong); opacity: 1; }
+.motif__ring[data-i="2"] { opacity: 0.8; }
+.motif__ring[data-i="3"] { opacity: 0.6; }
+.motif__ring[data-i="4"] { stroke: var(--light); opacity: 1; }
+.motif__ring[data-i="5"] { opacity: 0.35; }
 .motif__core { fill: var(--light); }
 
 @media (prefers-reduced-motion: no-preference) {
-  .motif__ring[data-i="2"], .motif__ring[data-i="3"], .motif__ring[data-i="5"] {
+  .motif__ring[data-i="5"], .motif__ring[data-i="3"] {
     transform-box: fill-box;
     transform-origin: center;
     animation: deep-ripple var(--ripple-cycle) linear infinite;
   }
-  .motif__ring[data-i="3"] { animation-delay: calc(var(--ripple-cycle) * -0.33); }
-  .motif__ring[data-i="5"] { animation-delay: calc(var(--ripple-cycle) * -0.66); }
+  .motif__ring[data-i="3"] { animation-delay: calc(var(--ripple-cycle) * -0.5); }
 }
 @keyframes deep-ripple {
-  0% { transform: scale(0.88); opacity: 0; }
-  25% { opacity: 1; }
-  100% { transform: scale(1.12); opacity: 0; }
-}
-@media (max-width: 64rem) {
-  .motif { position: relative; inset: auto; transform: none; width: 100%; max-width: var(--motif-size-narrow); margin-inline: auto; }
+  0% { transform: scale(0.94); opacity: 0; }
+  30% { opacity: 0.6; }
+  100% { transform: scale(1.06); opacity: 0; }
 }

@@ -55,6 +55,9 @@ export async function settle(page) {
       Promise.all([...document.images].map((img) => img.complete ? null : new Promise((r) => { img.addEventListener('load', r); img.addEventListener('error', r); }))),
       wait(8000),
     ]);
+    // A loaded image is not always decoded, and an undecoded image leaves a
+    // blank box in a full-page capture. Decode every one before shooting.
+    await Promise.race([Promise.all([...document.images].map((img) => img.decode().catch(() => {}))), wait(15000)]);
   });
   await page.waitForTimeout(700);
 }

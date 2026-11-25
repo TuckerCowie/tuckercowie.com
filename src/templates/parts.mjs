@@ -48,7 +48,7 @@ export const mark = () => raw('<svg class="mark" viewBox="-12 -12 24 24" aria-hi
 export function picture(ctx, img, { alt, sizes = '(min-width: 1280px) 1200px, 96vw', eager = false, cls = '' }) {
   const set = (list) => list.map((v) => `${ctx.u(v.path)} ${v.w}w`).join(', ');
   const fb = img.variants.jpg[0];
-  return html`<picture class="${cls}"><source type="image/avif" srcset="${set(img.variants.avif)}" sizes="${sizes}"><source type="image/webp" srcset="${set(img.variants.webp)}" sizes="${sizes}"><img src="${ctx.u(fb.path)}" alt="${alt}" width="${img.width}" height="${img.height}"${attrs({ loading: eager ? null : 'lazy', decoding: 'async' })}></picture>`;
+  return html`<picture class="${cls}"><source type="image/avif" srcset="${set(img.variants.avif)}" sizes="${sizes}"><source type="image/webp" srcset="${set(img.variants.webp)}" sizes="${sizes}"><img src="${ctx.u(fb.path)}" alt="${alt}" width="${img.width}" height="${img.height}"${attrs({ loading: eager ? null : 'lazy' })}></picture>`;
 }
 
 // One artifact: the image on its mat, linked to the full-size file, with a

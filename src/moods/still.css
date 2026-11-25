@@ -27,9 +27,10 @@
   --focus:       var(--teal-text);
   --mat:         var(--paper-2);
   --mat-text:    var(--ink);
-  --mat-rule:    var(--line);
+  --mat-rule:    var(--paper-2);
   --numeral:     var(--ink-faint);
   --ripple:      var(--line-strong);
+  --foot:        var(--paper-2);
   --epigraph:    var(--ink-soft);
   --title-tail:  var(--ink);
 
@@ -56,11 +57,15 @@
   --fs-lead:    1.3125rem;
   --fs-brand:   1.375rem;
   --fs-h3:      clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem);
+  --fs-quote:   1.375rem;
+  --fs-quote-home: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem);
+  --fs-door:    clamp(1.5rem, 1.2rem + 0.9vw, 1.75rem);
+  --fs-home:    1.125rem;
   --fs-insight: clamp(1.5rem, 1.2rem + 1vw, 1.95rem);
   --fs-h2:      clamp(1.75rem, 1.3rem + 1.6vw, 2.6rem);
   --fs-h1:      clamp(2.5rem, 1.6rem + 3.4vw, 4.5rem);
   --fs-numeral: clamp(2.5rem, 1.8rem + 2.6vw, 4.5rem);
-  --fs-title:   clamp(2.75rem, 1.4rem + 5.2vw, 5.75rem);
+  --fs-title:   clamp(2.75rem, 1.4rem + 5.2vw, 5.5rem);
   --fs-display: clamp(3.5rem, 1.8rem + 5.6vw, 6.75rem);
   --lh-body: 1.62;
   --lh-lead: 1.5;
@@ -90,12 +95,14 @@
   --radius: 2px;
   --page: 84rem;
   --gutter: clamp(1.25rem, 4vw, 3rem);
-  --gap: 3rem;
+  --gap: 2.5rem;
+  --hang: -0.42em;
+  --sp-group: 2.5rem;
   --rail: 11rem;
-  --measure: 38rem;
+  --measure: 36rem;
   --epigraph-max: 46rem;
   --title-max: 46rem;
-  --head-h: 4.5rem;
+  --head-h: 4rem;
   --ctl: 1.75rem;
   --glyph: 0.75rem;
   --dot: 0.5rem;
@@ -107,19 +114,17 @@
   --filter-col: 8rem;
   --skills-col: 6rem;
   --count-col: 2.25rem;
-  --mat-pad: 1.25rem;
+  --mat-pad: 0.75rem;
   --tall-max: 34rem;
   --plate-text-offset: 0.5rem;
-  --orn-top: -1.5rem;
+  --orn-top: 0rem;
   --orn-end: 0rem;
   --orn-size-narrow: 9rem;
-  --orn-size: 19rem;
+  --orn-size: 17rem;
   --home-pad: 2rem;
-  --motif-size: 30rem;
-  --motif-size-narrow: 18rem;
+  --motif-size: 31rem;
+  --motif-size-narrow: 14rem;
 }
 
 /* Still Water only: a few quiet particulars. */
-.c-summary .c-orn { opacity: 1; }
-.switcher__btn[data-mood-set="deep"] .switcher__glyph { background: transparent; }
-.switcher__btn[data-mood-set="deep"][aria-pressed="true"] .switcher__glyph { background: transparent; }
+.site-foot { background: var(--foot); }
