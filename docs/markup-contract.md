@@ -20,10 +20,15 @@ styles what is listed here and nothing else.
    Two named exceptions, both controls and not content: a mood may show the
    switcher's `.switcher__name` only for the pressed button, using the
    visually-hidden pattern, and may visually hide `.switcher__label`.
+   A third, for column names: where a mood stacks a table's rows on a narrow
+   screen it may visually hide that table's `thead`, with the visually-hidden
+   pattern and never `display: none`. Each cell must then read on its own.
 4. **No reordering away from reading order.** No `order`, no
    `flex-direction: *-reverse`, no `grid-auto-flow: dense`. Placing children
    in grid areas is fine when the visual order still reads in source order,
-   or when the moved thing is a label, readout or ornament.
+   or when the moved thing is a label, readout or ornament. The switcher is
+   a utility control: on a narrow screen it may sit on the brand's row,
+   above the navigation.
 5. **Every colour, font, size step and space step is a token** declared in
    the mood's `:root` block. After that block a mood stylesheet holds no
    colour literal and no raw length other than `0`, `1px` hairlines and
@@ -255,10 +260,14 @@ section.c.c-published[data-c=published] > c-head ; ul.links? ; p.published__note
 ## Specimen (`data-page=specimen`)
 
 `section.c.c-tokens[data-specimen-mood]` (one per mood; the compiled sheet
-hides the others), `ul.swatches > li.swatch > span.swatch__chip +
-code.swatch__name + code.swatch__value`, `dl.tokenlist`, `section.c.c-type >
-div.type__rows > div.type__row`, `section.c.c-motifspec`, then a whole entry
-rendered as the written variant.
+hides the others). Inside it the tokens are grouped by kind:
+`div.tokengroup[data-kind=colour|role|font|size|value] > h3.c-sublabel` then,
+for colours, `ul.swatches > li.swatch > span.swatch__chip + code.swatch__name
++ code.swatch__value`, and for the rest `dl.tokenlist > div.token > dt + dd`.
+A size token's `dd` also holds an empty `span.token__bar` whose `--v` is the
+token's value, so a mood can draw the length to scale (`inline-size:
+var(--v)`). Then `section.c.c-type > div.type__rows > div.type__row`,
+`section.c.c-motifspec`, and a whole entry rendered as the written variant.
 
 ## Hook budget
 
@@ -271,5 +280,6 @@ Hooks that exist only so a mood can do something visual, and why:
 | `.crumb__sep` | A separator glyph a mood draws |
 | `.switcher__glyph` | The switcher's per-mood mark |
 | `data-shape` on `.artifact` | Sizing strips and tall artifacts differently |
+| `.token__bar` | Drawing a size token to scale on the specimen |
 
 Adding a hook means adding it for every mood. Ask before adding one.

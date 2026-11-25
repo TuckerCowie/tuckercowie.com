@@ -30,6 +30,12 @@ export const PAGES = {
   profile: { path: '/profile/', band: 'profile' },
   systems: { path: '/systems/', band: 'systems' },
   specimen: { path: '/specimen/', band: 'specimen' },
+  // No study band: these are shot for looking at, never paired.
+  written: { path: '/work/international-design-sprints/' },
+  filtered: { path: '/work/type/case-study/' },
+  collection: { path: '/work/c/keto-ai/' },
+  resume: { path: '/resume/' },
+  notfound: { path: '/404.html' },
 };
 
 export async function open(browser, url, { width = 1440, height = 900, scheme = 'light', scale = 1 } = {}) {

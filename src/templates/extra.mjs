@@ -40,6 +40,12 @@ ${list('ul', profile.education.map((e) => html`<span class="edu__title">${e.titl
 }
 
 const isColour = (v) => /^(oklch|oklab|rgb|hsl|#|color\()/.test(v);
+const kindOf = (k, v) => (isColour(v) ? 'colour'
+  : /^var\(--[\w-]+\)$/.test(v) ? 'role'
+  : /^--font/.test(k) || /["']|\b(serif|monospace)\b/.test(v) ? 'font'
+  : /\d(rem|px|em|vw|vh|ch)\b/.test(v) ? 'size'
+  : 'value');
+const GROUPS = [['role', 'Roles'], ['font', 'Fonts'], ['size', 'Sizes and space'], ['value', 'Other values']];
 
 export function specimenPage(ctx, { tokenDump }) {
   const sample = 'Still water that runs deep.';
@@ -52,14 +58,18 @@ ${head({ label: 'Specimen' })}
 <div class="prose pagehead__intro"><p>Every token and component, in the mood you are viewing. Used by the checks and by anyone adding a mood.</p></div>
 </section>
 ${moods.map((m) => {
-    const tokens = Object.entries(tokenDump[m.id] ?? {});
-    const colours = tokens.filter(([, v]) => isColour(v));
-    const rest = tokens.filter(([, v]) => !isColour(v));
+    const tokens = Object.entries(tokenDump[m.id] ?? {}).map(([k, v]) => ({ k, v, kind: kindOf(k, v) }));
+    const colours = tokens.filter((t) => t.kind === 'colour');
     return html`<section class="c c-tokens" data-c="tokens" data-specimen-mood="${m.id}">
 ${orn()}
 ${head({ label: 'Tokens', tag: 'h2', readout: `${m.name}. ${m.stands}.` })}
-<ul class="swatches" role="list" style="--n:${colours.length}">${colours.map(([k, v]) => html`<li class="swatch"><span class="swatch__chip" style="background:${v}"></span> <code class="swatch__name">${k}</code> <code class="swatch__value">${v}</code></li>`)}</ul>
-<dl class="tokenlist">${rest.map(([k, v]) => html`<div><dt><code>${k}</code></dt><dd><code>${v}</code></dd></div>`)}</dl>
+<div class="tokengroup" data-kind="colour"><h3 class="c-sublabel">Colour</h3>
+<ul class="swatches" role="list" style="--n:${colours.length}">${colours.map(({ k, v }) => html`<li class="swatch"><span class="swatch__chip" style="background:${v}"></span> <code class="swatch__name">${k}</code> <code class="swatch__value">${v}</code></li>`)}</ul></div>
+${GROUPS.map(([kind, label]) => {
+      const rows = tokens.filter((t) => t.kind === kind);
+      return rows.length ? html`<div class="tokengroup" data-kind="${kind}"><h3 class="c-sublabel">${label}</h3>
+<dl class="tokenlist" style="--n:${rows.length}">${rows.map(({ k, v }) => html`<div class="token"><dt><code>${k}</code></dt><dd><code>${v}</code>${kind === 'size' ? html` <span class="token__bar" style="--v:${v}" aria-hidden="true"></span>` : ''}</dd></div>`)}</dl></div>` : '';
+    })}
 </section>`;
   })}
 <section class="c c-type" data-c="type">
