@@ -19,7 +19,7 @@ ${head({ label: manual.kicker })}
 <h1 class="c-title">${title(manual.title)}</h1>
 <p class="pagehead__sub">${manual.subtitle}</p>
 <blockquote class="epigraph"><p>${manual.epigraph}</p></blockquote>
-${profile.portrait ? html`<figure class="portrait">${picture(ctx, profile.portrait.asset, { alt: profile.portrait.alt, sizes: '(min-width: 900px) 420px, 80vw', eager: true })}<figcaption class="portrait__caption">${profile.portrait.caption}</figcaption></figure>` : ''}
+${profile.portrait ? html`<figure class="portrait" style="--w:${profile.portrait.asset.width};--h:${profile.portrait.asset.height}">${picture(ctx, profile.portrait.asset, { alt: profile.portrait.alt, sizes: '(min-width: 900px) 420px, 80vw', eager: true })}<figcaption class="portrait__caption">${profile.portrait.caption}</figcaption></figure>` : ''}
 </section>
 <div class="c c-manual" data-c="manual" style="--n:${n}">
 ${orn()}

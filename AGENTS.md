@@ -90,7 +90,9 @@ One stylesheet and one registry line. No content file changes.
 1. Write `src/moods/<id>.css` as if it were the only stylesheet on the site.
    Start with a token block on `:root`; after it, every colour, font, size
    and space is a `var()`. The build scopes the file to
-   `:root[data-mood="<id>"]`.
+   `:root[data-mood="<id>"]`. A mood may use any face declared in
+   `src/build/fonts.mjs`; a new face is one line there and a row in
+   `DEPENDENCIES.md`.
 2. Add one line to `src/moods/registry.mjs`.
 3. Style every component in `docs/markup-contract.md`. A mood may change
    layout as far as it likes. It may not hide content, reorder it with

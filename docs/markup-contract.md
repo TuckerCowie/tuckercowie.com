@@ -238,7 +238,7 @@ text label.
 ## Profile (`data-page=profile`)
 
 ```
-section.c.c-pagehead.c-manualhead > c-head ; h1.c-title ; p.pagehead__sub ; blockquote.epigraph > p ; figure.portrait > picture + figcaption.portrait__caption
+section.c.c-pagehead.c-manualhead > c-head ; h1.c-title ; p.pagehead__sub ; blockquote.epigraph > p ; figure.portrait[style=--w;--h] > picture + figcaption.portrait__caption
 div.c.c-manual[data-c=manual][--n] > c-head ; section.manual__section[--i] > h2.manual__title + p.manual__lede? + div.prose.manual__body
     lists inside .manual__body: ol or ul; li.pair > span.pair__term + span.pair__desc for term and description pairs
 section.c.c-statements[data-c=statements] > c-head ; dl.statements > div.statement > dt + dd

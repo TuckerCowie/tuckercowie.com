@@ -81,9 +81,9 @@ const layoutProblems = () => {
     const r = img.getBoundingClientRect();
     if (!r.width) { out.push(`an image is not shown: ${img.alt.slice(0, 50)}`); continue; }
     const dpr = window.devicePixelRatio || 1;
-    const full = Number(getComputedStyle(img.closest('.artifact') ?? img).getPropertyValue('--w')) || img.naturalWidth;
+    const full = Number(getComputedStyle(img.closest('.artifact, .portrait') ?? img).getPropertyValue('--w')) || img.naturalWidth;
     if (r.width > full + 1) out.push(`an image is drawn at ${Math.round(r.width)}px, wider than its ${full}px: ${img.alt.slice(0, 50)}`);
-    if (Math.abs(r.width / r.height - img.naturalWidth / img.naturalHeight) > 0.03 && getComputedStyle(img).objectFit !== 'contain') out.push(`an image is distorted or cropped: ${img.alt.slice(0, 50)}`);
+    if (Math.abs((r.width / r.height) / (img.naturalWidth / img.naturalHeight) - 1) > 0.03 && getComputedStyle(img).objectFit !== 'contain') out.push(`an image is distorted or cropped: ${img.alt.slice(0, 50)}`);
     void dpr;
   }
   return out;
@@ -152,7 +152,9 @@ for (const mood of moods) {
 
 // ---- content parity: a mood changes layout, never content ----
 
-const snapshot = async (page) => (await page.locator('body').ariaSnapshot()).replace(/ \[pressed(=\w+)?\]/g, '');
+// The pressed switcher button and the mood carried on every link differ by
+// design; nothing else may.
+const snapshot = async (page) => (await page.locator('body').ariaSnapshot()).replace(/ \[pressed(=\w+)?\]/g, '').replace(new RegExp(`[?&]${param}=[\\w-]+`, 'g'), '');
 const visibleText = (page) => page.evaluate(() => {
   const skip = (el) => el.closest('[aria-hidden="true"], [hidden], script, style, [data-c="switcher"], #mood-status, #mood-config');
   const out = [];
