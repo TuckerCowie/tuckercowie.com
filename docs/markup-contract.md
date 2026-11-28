@@ -259,6 +259,9 @@ section.c.c-published[data-c=published] > c-head ; ul.links? ; p.published__note
 
 ## Specimen (`data-page=specimen`)
 
+In this order: the page head; `section.c.c-type > div.type__rows >
+div.type__row` (each row a `p.c-sublabel` and a sample set in the real
+component class, so type is shown at true size first); then
 `section.c.c-tokens[data-specimen-mood]` (one per mood; the compiled sheet
 hides the others). Inside it the tokens are grouped by kind:
 `div.tokengroup[data-kind=colour|role|font|size|value] > h3.c-sublabel` then,
@@ -266,8 +269,8 @@ for colours, `ul.swatches > li.swatch > span.swatch__chip + code.swatch__name
 + code.swatch__value`, and for the rest `dl.tokenlist > div.token > dt + dd`.
 A size token's `dd` also holds an empty `span.token__bar` whose `--v` is the
 token's value, so a mood can draw the length to scale (`inline-size:
-var(--v)`). Then `section.c.c-type > div.type__rows > div.type__row`,
-`section.c.c-motifspec`, and a whole entry rendered as the written variant.
+var(--v)`). Then `section.c.c-motifspec` and a whole entry rendered as the
+written variant.
 
 ## Hook budget
 
