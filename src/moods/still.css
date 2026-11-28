@@ -90,6 +90,22 @@
 
   /* layout and knobs */
   --fs-date: var(--fs-numeral);
+  --fs-data: 0.875rem;
+  --fs-row: 1.5rem;
+  --fs-stat: clamp(3.5rem, 2rem + 5vw, 6.5rem);
+  --fs-mega: clamp(6rem, 3rem + 14vw, 16rem);
+  --track-type: 0.06em;
+  --col-year: 4.5rem;
+  --col-type: 8.5rem;
+  --col-status: 9rem;
+  --col-term: 10rem;
+  --swatch-h: 4.5rem;
+  --bar-h: 0.5rem;
+  --node: 0.75rem;
+  --num-min: 10rem;
+  --swatch-min: 11rem;
+  --tok-name: 12rem;
+  --portrait-narrow: 13rem;
   --clear: transparent;
   --fs-code: 0.95rem;
   --radius: 2px;

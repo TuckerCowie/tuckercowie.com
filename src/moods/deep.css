@@ -85,6 +85,22 @@
   --sp-8: 9rem;
 
   --clear: transparent;
+  --fs-data: 0.875rem;
+  --fs-row: 1.625rem;
+  --fs-stat: clamp(3.5rem, 2rem + 5vw, 6.5rem);
+  --fs-mega: clamp(6rem, 3rem + 14vw, 16rem);
+  --track-type: 0.06em;
+  --col-year: 4.5rem;
+  --col-type: 8.5rem;
+  --col-status: 9rem;
+  --col-term: 10rem;
+  --swatch-h: 4.5rem;
+  --bar-h: 0.5rem;
+  --node: 0.75rem;
+  --num-min: 10rem;
+  --swatch-min: 11rem;
+  --tok-name: 12rem;
+  --portrait-narrow: 13rem;
   --fs-code: 0.95rem;
   --radius: 0;
   --page: 84rem;
@@ -129,7 +145,7 @@ main { overflow-x: clip; }
 .site-foot { background: var(--foot); }
 .mark__inner { stroke: var(--text-soft); }
 .c-home > *:not(.motif) { z-index: 1; }
-.motif {
+.c-home .motif {
   position: absolute;
   inset-block-start: 50%;
   inset-inline-end: calc(var(--motif-bleed) * -1);
@@ -141,21 +157,21 @@ main { overflow-x: clip; }
   transform: translateY(-50%);
   z-index: 0;
 }
-.motif__ring { stroke: var(--line-strong); }
-.motif__ring[data-i="1"] { stroke: var(--line-strong); opacity: 1; }
-.motif__ring[data-i="2"] { opacity: 0.8; }
-.motif__ring[data-i="3"] { opacity: 0.6; }
-.motif__ring[data-i="4"] { stroke: var(--light); opacity: 1; }
-.motif__ring[data-i="5"] { opacity: 0.35; }
-.motif__core { fill: var(--light); }
+.c-home .motif__ring { stroke: var(--line-strong); }
+.c-home .motif__ring[data-i="1"] { stroke: var(--line-strong); opacity: 1; }
+.c-home .motif__ring[data-i="2"] { opacity: 0.8; }
+.c-home .motif__ring[data-i="3"] { opacity: 0.6; }
+.c-home .motif__ring[data-i="4"] { stroke: var(--light); opacity: 1; }
+.c-home .motif__ring[data-i="5"] { opacity: 0.35; }
+.c-home .motif__core { fill: var(--light); }
 
 @media (prefers-reduced-motion: no-preference) {
-  .motif__ring[data-i="5"], .motif__ring[data-i="3"] {
+  .c-home .motif__ring[data-i="5"], .c-home .motif__ring[data-i="3"] {
     transform-box: fill-box;
     transform-origin: center;
     animation: deep-ripple var(--ripple-cycle) linear infinite;
   }
-  .motif__ring[data-i="3"] { animation-delay: calc(var(--ripple-cycle) * -0.5); }
+  .c-home .motif__ring[data-i="3"] { animation-delay: calc(var(--ripple-cycle) * -0.5); }
 }
 @keyframes deep-ripple {
   0% { transform: scale(0.94); opacity: 0; }
